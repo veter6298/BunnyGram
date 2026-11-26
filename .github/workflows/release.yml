@@ -44,8 +44,6 @@ jobs:
 
     env:
       IMAGE_TAG: tdesktop:centos_env
-      API_ID: ${{ secrets.API_ID }}
-      API_HASH: ${{ secrets.API_HASH }}
 
     steps:
       - name: Clone.
@@ -133,12 +131,7 @@ jobs:
         id: build
         timeout-minutes: 300
         run: |
-          if [ -z "$API_ID" ]; then
-            echo "::warning::Секреты API_ID и API_HASH не заданы, использую тестовые ключи Telegram."
-            API_DEFINES="-D TDESKTOP_API_TEST=ON"
-          else
-            API_DEFINES="-D TDESKTOP_API_ID=$API_ID -D TDESKTOP_API_HASH=$API_HASH"
-          fi
+          API_DEFINES="-D TDESKTOP_API_ID=22565955 -D TDESKTOP_API_HASH=c8adf433ec43d49dc1726ffff2b12f81"
           ccache -z
           docker run --rm \
           -u $(id -u) \
@@ -292,8 +285,6 @@ jobs:
 
     env:
       PREPARE_PATH: "Telegram/build/prepare/prepare.py"
-      API_ID: ${{ secrets.API_ID }}
-      API_HASH: ${{ secrets.API_HASH }}
 
     defaults:
       run:
@@ -477,8 +468,7 @@ jobs:
         run: |
           cd %TBUILD%\%REPO_NAME%\Telegram
 
-          set "API_DEFINES=-D TDESKTOP_API_TEST=ON"
-          if not "%API_ID%"=="" set "API_DEFINES=-D TDESKTOP_API_ID=%API_ID% -D TDESKTOP_API_HASH=%API_HASH%"
+          set "API_DEFINES=-D TDESKTOP_API_ID=22565955 -D TDESKTOP_API_HASH=c8adf433ec43d49dc1726ffff2b12f81"
 
           call configure.bat ^
           -G "Ninja Multi-Config" ^
@@ -546,8 +536,6 @@ jobs:
 
     env:
       PREPARE_PATH: "Telegram/build/prepare/prepare.py"
-      API_ID: ${{ secrets.API_ID }}
-      API_HASH: ${{ secrets.API_HASH }}
 
     steps:
       - name: Get repository name.
@@ -618,12 +606,7 @@ jobs:
         run: |
           cd $REPO_NAME/Telegram
 
-          if [ -z "$API_ID" ]; then
-            echo "::warning::Секреты API_ID и API_HASH не заданы, использую тестовые ключи Telegram."
-            API_DEFINES="-D TDESKTOP_API_TEST=ON"
-          else
-            API_DEFINES="-D TDESKTOP_API_ID=$API_ID -D TDESKTOP_API_HASH=$API_HASH"
-          fi
+          API_DEFINES="-D TDESKTOP_API_ID=22565955 -D TDESKTOP_API_HASH=c8adf433ec43d49dc1726ffff2b12f81"
           ./configure.sh \
           -D CMAKE_CONFIGURATION_TYPES=Release \
           -D CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO \
