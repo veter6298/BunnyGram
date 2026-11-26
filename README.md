@@ -1,26 +1,21 @@
 <p align="center">
-  <img src="docs/readme/logo.png" alt="mokaGram" width="120">
+  <img src="docs/readme/logo.png" alt="bunnyGram" width="120">
 </p>
 
-<h1 align="center">mokaGram</h1>
+<h1 align="center">bunnyGram</h1>
 
 <p align="center">
-  Клиент на основе Telegram Desktop с переработанным дизайном и новыми функциями.
+  Форк mokaGram и Telegram Desktop с переработанным дизайном и новыми функциями.
 </p>
 
 <p align="center">
-  <a href="https://github.com/mokagram/mokagram/releases"><img src="https://img.shields.io/github/v/release/mokagram/mokagram?include_prereleases&style=for-the-badge&label=релиз&color=0a84ff&labelColor=282828" alt="Релиз"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/лицензия-GPLv3-8e8e93?style=for-the-badge&labelColor=282828" alt="GPLv3"></a>
-  <a href="https://t.me/ecronx"><img src="https://img.shields.io/badge/автор-@ecronx-8e8e93?style=for-the-badge&labelColor=282828&logo=telegram&logoColor=white" alt="@ecronx"></a>
-</p>
-
-<p align="center">
-  <img src="docs/readme/chat-full.webp" alt="mokaGram: окно чата" width="86%">
+  <a href="MOKAGRAM_NOTICE.md"><img src="https://img.shields.io/badge/основа-MOKAGRAM-D9A7FF?style=for-the-badge&labelColor=282828" alt="mokaGram"></a>
 </p>
 
 ## О проекте
 
-**mokaGram** — кастомный форк Telegram Desktop с полностью переработанным визуалом в md3-стиле и кучей новых полезных функций. Все секции в настройках лежат отдельными скруглёнными карточками, каждая функция включается отдельно, и включать нужно только то, что нужно.
+**bunnyGram** — форк [mokaGram](https://github.com/mokagram/mokagram), который, в свою очередь, основан на [Telegram Desktop](https://github.com/telegramdesktop/tdesktop). Визуал, MD3-настройки, плагины, музыка, приватность и остальные функции наследуются от mokaGram; bunnyGram меняет имя, оформление, иконки и правила распространения.
 
 Клиент работает с обычным аккаунтом Telegram и обычными серверами. Плагины из экстеры, но на ПК: свой API, Python runtime и магазин прямо в клиенте.
 
@@ -39,30 +34,31 @@
 
 Для воспроизведения недоступных треков SoundCloud из YouTube Music нужен актуальный локальный `yt-dlp`. Скачать его и проверить требования к среде JavaScript можно на [странице yt-dlp](https://github.com/yt-dlp/yt-dlp#dependencies).
 
-Всё лежит в одном месте: **Настройки → Настройки mokaGram**. Подробно со скриншотами: [docs/FEATURES.md](docs/FEATURES.md).
+Всё лежит в одном месте: **Настройки → Настройки bunnyGram**. Подробно со скриншотами: [docs/FEATURES.md](docs/FEATURES.md).
 
-## Скачать
+## Сборка
 
-| Система | Версия | Файл |
-|---|---|---|
-| **macOS Apple Silicon (arm64)** | v0.1.9 | [mokaGram-7.3.3-arm64.dmg](https://github.com/mokagram/mokagram/releases/download/v0.1.9/mokaGram-7.3.3-arm64.dmg) |
-| **Windows** | v0.1.7 | [mokagram-win-x64.zip](https://github.com/mokagram/mokagram/releases/download/v0.1.7/mokagram-win-x64.zip) |
-| **Linux x86_64** | v0.1.10 | [AppImage](https://github.com/mokagram/mokagram/releases/download/v0.1.10/mokagram-x86_64.AppImage) · [.deb](https://github.com/mokagram/mokagram/releases/download/v0.1.10/mokagram_0.1.10_amd64.deb) · [.rpm](https://github.com/mokagram/mokagram/releases/download/v0.1.10/mokagram-0.1.10-1.x86_64.rpm) · [pacman](https://github.com/mokagram/mokagram/releases/download/v0.1.10/mokagram-0.1.10-1-x86_64.pkg.tar.zst) · [tar.xz](https://github.com/mokagram/mokagram/releases/download/v0.1.10/mokagram-linux-x64.tar.xz) |
+Готовых сборок пока нет: это исходники форка. Собирается так же, как Telegram Desktop:
 
-macOS: откройте DMG и перетащите **mokaGram** в **Applications**. Версия клиента в macOS: **7.3.3**. В **v0.1.10** обновлены пять Linux-пакетов; macOS доступен из v0.1.9, Windows из v0.1.7.
+- [macOS](docs/building-mac.md)
+- [Windows](docs/building-win.md)
+- [GNU/Linux (Docker)](docs/building-linux.md)
 
-Сборки macOS и Windows без подписи разработчика, система может предупредить при первом запуске.
+Устройство репозитория и отличия форка: [docs/BUNNYGRAM.md](docs/BUNNYGRAM.md). Исходники Telegram Desktop и список сторонних библиотек: [telegramdesktop/tdesktop](https://github.com/telegramdesktop/tdesktop).
 
-### Новое в v0.1.10 для Linux
+Перед первой сборкой подставьте свой репозиторий вместо `OWNER/bunnyGram` в README, `LEGAL`, `BUNNYGRAM_NOTICE.md`, `docs/BUNNYGRAM.md` и `.github/workflows/release.yml`.
 
-- Linux получил функции текущей версии клиента: полноэкранный плеер, Dynamic Island, импорт и синхронизацию плейлистов SoundCloud, выбор и закрепление источников музыки.
-- Плавающее поле ввода, обновлённые пузыри сообщений, лента каналов и отдельная страница настроек производительности.
-- Исправления авторизации SoundCloud, истории сообщений, файловых прав плагинов и работы плеера в узком окне.
-- Все пять форматов включают Qt и библиотеки среды выполнения. Для Python-плагинов установите `python3`, для их изоляции также `bubblewrap` (`bwrap`).
+## Что уже переименовано
 
-**AppImage:** разрешите выполнение файла и запустите его. **tar.xz:** распакуйте и запустите `mokaGram/Telegram`. Пакеты deb, rpm и pacman устанавливаются штатным менеджером пакетов; команда запуска: `mokagram`.
+- имя приложения, заголовки окон, «О программе», настройки и переводы;
+- каталог данных (`~/.local/share/bunnyGram` на Linux) и короткое имя интеграции;
+- имя macOS-бандла `bunnyGram` и идентификатор `app.bunnygram.desktop`;
+- Linux-пакеты и desktop-файл, Windows exe, артефакты CI;
+- иконки и логотип приложения.
 
-[Release notes v0.1.10](https://github.com/mokagram/mokagram/releases/tag/v0.1.10) · [Текст в репозитории](docs/releases/v0.1.10.md) · [SHA256SUMS](https://github.com/mokagram/mokagram/releases/download/v0.1.10/SHA256SUMS).
+Внутренние имена (`Telegram/SourceFiles/mokagram/`, namespace `Mokagram`, ключи настроек, формат `.mokaset`, сервер обновлений) оставлены как в mokaGram, чтобы не ломать совместимость и сборку. Подробности и план дальнейшего переименования: [docs/BUNNYGRAM.md](docs/BUNNYGRAM.md).
+
+Автообновления отключены: манифест mokaGram подписан чужим ключом, форк не должен ставить такие обновления.
 
 ## Плагины
 
@@ -70,26 +66,14 @@ macOS: откройте DMG и перетащите **mokaGram** в **Applicatio
 
 Полное описание: [docs-plugins-api.md](docs-plugins-api.md), пример: [examples/showcase.plugin](examples/showcase.plugin).
 
-## Сборка
-
-mokaGram собирается так же, как Telegram Desktop:
-
-- [macOS](docs/building-mac.md)
-- [Windows](docs/building-win.md)
-- [GNU/Linux (Docker)](docs/building-linux.md)
-
-Устройство репозитория: [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). Исходники Telegram Desktop и список сторонних библиотек: [telegramdesktop/tdesktop](https://github.com/telegramdesktop/tdesktop).
-
 ## Авторство и лицензия
 
 > **Основано на mokaGram, автор [@ecronx](https://t.me/ecronx) (https://t.me/ecronx). https://github.com/mokagram/mokagram**
 
-mokaGram основан на [Telegram Desktop](https://github.com/telegramdesktop/tdesktop) (© The Telegram Desktop Authors, GPLv3 с исключением OpenSSL). Доработки © 2026 [@ecronx](https://t.me/ecronx), лицензия та же, GPLv3, плюс условие об сохранении авторства.
+bunnyGram основан на mokaGram, а mokaGram — на [Telegram Desktop](https://github.com/telegramdesktop/tdesktop) (© The Telegram Desktop Authors, GPLv3 с исключением OpenSSL). Доработки mokaGram © 2026 [@ecronx](https://t.me/ecronx), лицензия та же, GPLv3, плюс условие о сохранении авторства.
 
-Кто берёт исходники или сборки mokaGram, обязан сохранить [уведомление](MOKAGRAM_NOTICE.md) и указать авторство в README и в окне «О программе». При нарушении лицензия прекращается.
+Кто берёт исходники или сборки, обязан сохранить [уведомление mokaGram](MOKAGRAM_NOTICE.md), [уведомление bunnyGram](BUNNYGRAM_NOTICE.md) и указать авторство в README и в окне «О программе». При нарушении лицензия прекращается.
 
-*Anyone using mokaGram source code **must credit the author** ([@ecronx](https://t.me/ecronx), https://github.com/mokagram/mokagram) in the README and the About window and keep the [notice](MOKAGRAM_NOTICE.md).*
+*Anyone using mokaGram source code **must credit the author** ([@ecronx](https://t.me/ecronx), https://github.com/mokagram/mokagram) in the README and the About window and keep the [notice](MOKAGRAM_NOTICE.md). The bunnyGram fork keeps this attribution and adds [BUNNYGRAM_NOTICE.md](BUNNYGRAM_NOTICE.md).*
 
-<p align="center">
-  <a href="https://t.me/ecronx">@ecronx</a> · <a href="https://github.com/mokagram/mokagram/releases">релизы</a>
-</p>
+bunnyGram не связан с Telegram Messenger LLP. «Telegram» — товарный знак соответствующего правообладателя; название и иконка форка его не используют.

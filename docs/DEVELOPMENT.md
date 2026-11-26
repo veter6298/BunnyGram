@@ -8,8 +8,8 @@ Telegram/SourceFiles/mokagram/
 ├── streamer/   режим стримера
 ├── ghost/      призрак
 ├── commands/   быстрые команды
-└── settings/   настройки mokaGram
+└── settings/   настройки bunnyGram
 patches/        правки поверх upstream
 ```
 
-Всё добавленное лежит в `Telegram/SourceFiles/mokagram/`, остальные правки помечены `Mokagram:`. Так форк проще подтягивать к свежему Telegram Desktop.
+Всё добавленное mokaGram лежит в `Telegram/SourceFiles/mokagram/`, правки mokaGram помечены `Mokagram:`, правки bunnyGram помечаются `Bunnygram:`. Каталог и namespace оставлены как в mokaGram, чтобы форк проще подтягивался к upstream; отличия форка описаны в [BUNNYGRAM.md](BUNNYGRAM.md).

@@ -1,6 +1,6 @@
-# mokaGram
+# bunnyGram
 
-Десктопный клиент Telegram: форк tdesktop (C++/Qt) с системой Python-плагинов. Лицензия GPL-3 с условием атрибуции из `MOKAGRAM_NOTICE.md`. Наш код лежит в `Telegram/SourceFiles/mokagram/`, правки в коде tdesktop держать минимальными и помечать комментарием `// Mokagram:`.
+Десктопный клиент Telegram: форк tdesktop (C++/Qt) с системой Python-плагинов. Лицензия GPL-3 с условиями атрибуции из `MOKAGRAM_NOTICE.md` и `BUNNYGRAM_NOTICE.md`. Код mokaGram лежит в `Telegram/SourceFiles/mokagram/`, правки mokaGram помечены `// Mokagram:`, правки bunnyGram помечать `// Bunnygram:`. Внутренние имена mokagram не переименовывать без сборки и проверки: см. `docs/BUNNYGRAM.md`.
 
 Внешний вид и сборка экранов: [`design.md`](design.md). Его читать до любой визуальной правки.
 
@@ -37,9 +37,9 @@
 
 # Ветки и пуш
 
-- Рабочая ветка `mokagram`, remote `origin` = github.com/mokagram/mokagram.
-- После каждого коммита сразу `git push origin mokagram:mokagram`. Без `--force`.
-- Перед работой `git fetch` и фаст-форвард: второй разработчик пушит в ту же ветку.
+- Рабочая ветка bunnyGram, remote `origin` = форк на GitHub, `upstream` = github.com/mokagram/mokagram.
+- Пушить только в `origin`. В `upstream` не пушить.
+- Перед работой `git fetch upstream` и мержить изменения mokaGram по необходимости.
 
 # Commits
 
