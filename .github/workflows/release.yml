@@ -1,15 +1,18 @@
-name: Release.
+name: Сборка и релиз
 
 # Релизные сборки bunnyGram: Linux (tar.xz, AppImage, deb, rpm, pacman), Windows (zip), macOS (dmg, zip).
-# Запуск вручную: Actions -> Release -> Run workflow, указать тег (например v0.1.0).
-# Нужны секреты репозитория API_ID и API_HASH (свои ключи Telegram API).
+# Запуск вручную: Actions -> Release -> Run workflow.
+# Тег можно не указывать: тогда соберутся только артефакты, без релиза.
+# Секреты API_ID и API_HASH не обязательны: без них сборка идёт с тестовыми
+# ключами Telegram (вход ограничен, для релиза нужны свои ключи).
 
 on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: 'Тег релиза на GitHub (например v0.1.0)'
-        required: true
+        description: 'Тег релиза на GitHub (пусто = собрать без публикации)'
+        required: false
+        default: ''
       linux:
         description: 'Собрать Linux'
         type: boolean
@@ -41,10 +44,12 @@ jobs:
 
     env:
       IMAGE_TAG: tdesktop:centos_env
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
 
     steps:
       - name: Clone.
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -52,6 +57,8 @@ jobs:
         run: |
           sudo apt update
           curl -sSL https://install.python-poetry.org | python3 -
+          export PATH="$HOME/.local/bin:$PATH"
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
           curl -sSL https://github.com/ccache/ccache/releases/download/v4.13.6/ccache-4.13.6-linux-x86_64-glibc.tar.xz \
           | sudo tar xJ -C /usr/local/bin --strip-components=1 ccache-4.13.6-linux-x86_64-glibc/ccache
           echo "CCACHE_DIR=$RUNNER_TEMP/.tdesktop-cache" >> $GITHUB_ENV
@@ -68,11 +75,11 @@ jobs:
 
       - name: Set up Docker Buildx.
         id: setup-buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@v3
 
       - name: Libraries cache.
         id: cache-libs
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v4
         with:
           path: |
             ${{ runner.temp }}/.buildx-cache
@@ -91,7 +98,7 @@ jobs:
       - name: Libraries.
         id: libs
         timeout-minutes: 300
-        uses: docker/build-push-action@v7
+        uses: docker/build-push-action@v6
         with:
           context: Telegram/build/docker/centos_env
           load: true
@@ -107,7 +114,7 @@ jobs:
 
       - name: Save libraries cache.
         if: always() && steps.libs.outcome == 'success'
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v4
         with:
           path: |
             ${{ runner.temp }}/.buildx-cache
@@ -116,7 +123,7 @@ jobs:
 
       - name: Restore Telegram Desktop cache.
         id: cache-tdesktop
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.OS }}-tdesktop-release-${{ github.run_id }}
@@ -126,6 +133,12 @@ jobs:
         id: build
         timeout-minutes: 300
         run: |
+          if [ -z "$API_ID" ]; then
+            echo "::warning::Секреты API_ID и API_HASH не заданы, использую тестовые ключи Telegram."
+            API_DEFINES="-D TDESKTOP_API_TEST=ON"
+          else
+            API_DEFINES="-D TDESKTOP_API_ID=$API_ID -D TDESKTOP_API_HASH=$API_HASH"
+          fi
           ccache -z
           docker run --rm \
           -u $(id -u) \
@@ -135,14 +148,13 @@ jobs:
           -e CCACHE_SLOPPINESS=pch_defines,time_macros \
           $IMAGE_TAG \
           env -u CCACHE_DISABLE /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
-          -D TDESKTOP_API_ID=${{ secrets.API_ID }} \
-          -D TDESKTOP_API_HASH=${{ secrets.API_HASH }} \
+          $API_DEFINES \
           -D DESKTOP_APP_DISABLE_AUTOUPDATE=OFF \
           -D DESKTOP_APP_DISABLE_CRASH_REPORTS=ON
 
       - name: Save Telegram Desktop cache.
         if: always() && steps.build.outcome != 'skipped'
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v4
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ steps.cache-tdesktop.outputs.cache-primary-key }}
@@ -154,7 +166,7 @@ jobs:
           cp -R out/Release/TelegramHelpers artifact/
           test -x artifact/TelegramHelpers/TelegramWidgetHelper
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v4
         name: Upload binaries.
         with:
           name: linux-bin
@@ -167,9 +179,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Clone.
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@v4
         with:
           name: linux-bin
           path: bin
@@ -266,11 +278,11 @@ jobs:
           dpkg-deb -c dist/*.deb | head -15
           test "$(stat -c %s dist/bunnygram-x86_64.AppImage)" -gt 1000000
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v4
         with:
           name: linux-packages
           path: dist/
-          retention-days: 3
+          retention-days: 7
 
   windows:
     name: Windows
@@ -280,6 +292,8 @@ jobs:
 
     env:
       PREPARE_PATH: "Telegram/build/prepare/prepare.py"
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
 
     defaults:
       run:
@@ -313,7 +327,7 @@ jobs:
         run: echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
 
       - name: Clone.
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           path: ${{ env.TBUILD }}\${{ env.REPO_NAME }}
@@ -348,7 +362,7 @@ jobs:
 
       - name: ThirdParty cache.
         id: cache-third-party
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v4
         with:
           path: ${{ env.TBUILD }}\ThirdParty
           key: ${{ runner.OS }}-${{ runner.arch }}-third-party-${{ env.CACHE_KEY }}-${{ github.run_id }}
@@ -356,7 +370,7 @@ jobs:
 
       - name: Libraries cache.
         id: cache-libs
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v4
         with:
           path: |
             ${{ env.LibrariesPath }}\*
@@ -369,7 +383,7 @@ jobs:
 
       - name: Qt cache.
         id: cache-qt
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v4
         with:
           path: |
             ${{ env.LibrariesPath }}\[qQ]t[_-]*
@@ -413,7 +427,7 @@ jobs:
       # Сохраняем кэши даже если библиотеки не доехали: следующий запуск продолжит с места падения.
       - name: Save Qt cache.
         if: always()
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v4
         with:
           path: |
             ${{ env.LibrariesPath }}\[qQ]t[_-]*
@@ -422,7 +436,7 @@ jobs:
 
       - name: Save libraries cache.
         if: always()
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v4
         with:
           path: |
             ${{ env.LibrariesPath }}\*
@@ -434,7 +448,7 @@ jobs:
 
       - name: Save ThirdParty cache.
         if: always()
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v4
         with:
           path: ${{ env.TBUILD }}\ThirdParty
           key: ${{ steps.cache-third-party.outputs.cache-primary-key }}
@@ -455,10 +469,12 @@ jobs:
         run: |
           cd %TBUILD%\%REPO_NAME%\Telegram
 
+          set "API_DEFINES=-D TDESKTOP_API_TEST=ON"
+          if not "%API_ID%"=="" set "API_DEFINES=-D TDESKTOP_API_ID=%API_ID% -D TDESKTOP_API_HASH=%API_HASH%"
+
           call configure.bat ^
           -G "Ninja Multi-Config" ^
-          -D TDESKTOP_API_ID=${{ secrets.API_ID }} ^
-          -D TDESKTOP_API_HASH=${{ secrets.API_HASH }} ^
+          %API_DEFINES% ^
           -D CMAKE_CONFIGURATION_TYPES=Release ^
           -D DESKTOP_APP_DISABLE_AUTOUPDATE=OFF ^
           -D DESKTOP_APP_DISABLE_CRASH_REPORTS=ON ^
@@ -508,11 +524,11 @@ jobs:
           '@ | python -
           Get-ChildItem dist
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v4
         with:
           name: windows-packages
           path: dist\
-          retention-days: 3
+          retention-days: 7
 
   macos:
     name: macOS
@@ -522,13 +538,15 @@ jobs:
 
     env:
       PREPARE_PATH: "Telegram/build/prepare/prepare.py"
+      API_ID: ${{ secrets.API_ID }}
+      API_HASH: ${{ secrets.API_HASH }}
 
     steps:
       - name: Get repository name.
         run: echo "REPO_NAME=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
 
       - name: Clone.
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           path: ${{ env.REPO_NAME }}
@@ -549,7 +567,7 @@ jobs:
 
       - name: Libraries cache.
         id: cache-libs
-        uses: actions/cache/restore@v6
+        uses: actions/cache/restore@v4
         with:
           path: |
             Libraries
@@ -577,7 +595,7 @@ jobs:
       # Кэш сохраняем даже если библиотеки не доехали: следующий запуск продолжит с места падения.
       - name: Save libraries cache.
         if: always()
-        uses: actions/cache/save@v6
+        uses: actions/cache/save@v4
         with:
           path: |
             Libraries
@@ -592,11 +610,16 @@ jobs:
         run: |
           cd $REPO_NAME/Telegram
 
+          if [ -z "$API_ID" ]; then
+            echo "::warning::Секреты API_ID и API_HASH не заданы, использую тестовые ключи Telegram."
+            API_DEFINES="-D TDESKTOP_API_TEST=ON"
+          else
+            API_DEFINES="-D TDESKTOP_API_ID=$API_ID -D TDESKTOP_API_HASH=$API_HASH"
+          fi
           ./configure.sh \
           -D CMAKE_CONFIGURATION_TYPES=Release \
           -D CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO \
-          -D TDESKTOP_API_ID=${{ secrets.API_ID }} \
-          -D TDESKTOP_API_HASH=${{ secrets.API_HASH }} \
+          $API_DEFINES \
           -D DESKTOP_APP_DISABLE_AUTOUPDATE=OFF \
           -D DESKTOP_APP_DISABLE_CRASH_REPORTS=ON
 
@@ -619,21 +642,21 @@ jobs:
             bunnyGram.app "$GITHUB_WORKSPACE/dist/bunnygram-macos-arm64.dmg"
           ls -la "$GITHUB_WORKSPACE/dist"
 
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v4
         with:
           name: macos-packages
           path: dist/
-          retention-days: 3
+          retention-days: 7
 
   release:
     name: Publish release
     needs: [linux-package, windows, macos]
-    if: always() && !cancelled() && (needs.linux-package.result == 'success' || needs.windows.result == 'success' || needs.macos.result == 'success')
+    if: always() && !cancelled() && inputs.release_tag != '' && (needs.linux-package.result == 'success' || needs.windows.result == 'success' || needs.macos.result == 'success')
     runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/download-artifact@v4
         with:
           path: assets
           pattern: '*-packages'
