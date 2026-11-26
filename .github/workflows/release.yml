@@ -413,6 +413,14 @@ jobs:
             echo "ключ tg_angle сброшен"
           fi
 
+      - name: Clean Qt build output.
+        shell: pwsh
+        run: |
+          $qtInstall = Join-Path $env:LibrariesPath 'Qt-6.12.0'
+          $qtBuild = Join-Path $env:LibrariesPath 'qt_6.12.0'
+          if (Test-Path $qtInstall) { Remove-Item -Recurse -Force $qtInstall }
+          if (Test-Path $qtBuild) { Remove-Item -Recurse -Force $qtBuild }
+
       - name: Libraries.
         id: libs
         continue-on-error: true
