@@ -301,7 +301,7 @@ jobs:
 
     steps:
       - name: Python 3.12 (тот же для cmake и для упаковки, иначе exe требует чужой pythonNNN.dll).
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12.10'
 
