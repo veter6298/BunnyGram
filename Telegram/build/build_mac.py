@@ -132,7 +132,7 @@ def resource_content(path):
 
 
 def assemble(builds, destination, toolchain, target, configuration):
-    binary_name = 'Telegram Lite' if target == 'macstore' else 'mokaGram'
+    binary_name = 'Telegram Lite' if target == 'macstore' else 'bunnyGram'
     app_name = binary_name + '.app'
     apps = {arch: folder / app_name for arch, folder in builds.items()}
     swift_runtime = pathlib.Path('Contents/Frameworks')
@@ -189,7 +189,7 @@ def assemble(builds, destination, toolchain, target, configuration):
             shutil.move(strings, nested / strings.name)
         if info['LSMinimumSystemVersion'] != '10.13':
             raise RuntimeError('The universal app lost its 10.13 deployment target.')
-        identifier = 'org.telegram.desktop' if target == 'macstore' else 'com.tdesktop.Telegram'
+        identifier = 'org.telegram.desktop' if target == 'macstore' else 'app.bunnygram.desktop'
         if info['CFBundleIdentifier'] != identifier or info['CFBundleExecutable'] != binary_name:
             raise RuntimeError('The app bundle does not match the selected distribution target.')
         resources = ['Contents/MacOS/' + binary_name,

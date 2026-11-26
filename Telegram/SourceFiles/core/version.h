@@ -20,7 +20,10 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 // used in Updater.cpp and Setup.iss for Windows
 constexpr auto AppId = "{53F49750-6209-4FBF-9CA8-7A333C87D1ED}"_cs;
 constexpr auto AppNameOld = "Telegram Win (Unofficial)"_cs;
-constexpr auto AppName = "Telegram Desktop"_cs;
+// Bunnygram: отображаемое имя клиента и владельца форка.
+constexpr auto AppName = "bunnyGram Desktop"_cs;
+// Bunnygram: AppFile оставлен "Telegram" намеренно: от него зависят пути
+// установщика/обновлений Windows и имена helper-процессов.
 constexpr auto AppFile = "Telegram"_cs;
 constexpr auto AppVersion = 7004006;
 constexpr auto AppVersionStr = "7.4.6";

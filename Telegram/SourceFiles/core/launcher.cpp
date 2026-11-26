@@ -343,7 +343,9 @@ void Launcher::init() {
 	prepareSettings();
 	initQtMessageLogging();
 
-	QApplication::setApplicationName(u"TelegramDesktop"_q);
+	// Bunnygram: своё имя приложения => свой каталог данных
+	// (~/.local/share/bunnyGram) и отдельный экземпляр клиента.
+	QApplication::setApplicationName(u"bunnyGram"_q);
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
 	// fallback session management is useless for tdesktop since it doesn't have
