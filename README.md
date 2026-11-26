@@ -15,7 +15,7 @@
 
 ## О проекте
 
-**bunnyGram** — форк [mokaGram](https://github.com/mokagram/mokagram), который, в свою очередь, основан на [Telegram Desktop](https://github.com/telegramdesktop/tdesktop). Визуал, MD3-настройки, плагины, музыка, приватность и остальные функции наследуются от mokaGram; bunnyGram меняет имя, оформление, иконки и правила распространения.
+**bunnyGram** — форк Telegram Desktop. Визуал, MD3-настройки, плагины, музыка, приватность и остальные функции нашего форка bunnyGram достались от Telegram Desktop; bunnyGram меняет имя, оформление, иконки и правила распространения.
 
 Клиент работает с обычным аккаунтом Telegram и обычными серверами. Плагины из экстеры, но на ПК: свой API, Python runtime и магазин прямо в клиенте.
 
