@@ -17,6 +17,16 @@ bunnyGram это форк [mokaGram](https://github.com/mokagram/mokagram), ос
 
 Иконки и логотип приложения заменены на bunnyGram.
 
+## Иконки
+
+Все размеры собираются одним скриптом без внешних зависимостей:
+
+```
+python3 tools/bunnygram/make_icons.py
+```
+
+Он перерисовывает `Telegram/Resources/art/icon*.png`, `icon256.ico`, `logo_256*.png`, `icon_round512@2x.png`, наборы `Telegram/Telegram/Images.xcassets` и `docs/readme/logo.png`. Цвета и форму зайца можно менять в начале скрипта.
+
 ## Что оставлено как в mokaGram
 
 Это сделано намеренно, чтобы не ломать сборку, формат данных и совместимость с плагинами:
@@ -55,7 +65,9 @@ git clone --recursive https://github.com/OWNER/bunnyGram.git
 
 ## Обновления
 
-Автообновления отключены: `up.moka.wtf` и ключ подписи принадлежат mokaGram, форк не должен принимать их обновления. Когда появится свой сервер и свой ключ Ed25519:
+Автообновления отключены в двух местах: `Core::SetUpdaterDisabledAtStartup()` в `core/launcher.cpp` выключает штатный апдейтер Telegram Desktop, а `kUpdatesEnabled = false` в `Telegram/SourceFiles/mokagram/update/mokagram_update.cpp` выключает апдейтер mokaGram. Причина одна: оба канала обновляют не этот форк.
+
+Когда появится свой сервер и свой ключ Ed25519:
 
 1. поднимите свой каталог с `update.json` и пакетами;
 2. замените `kBaseUrl` и `kPublicKey` в `Telegram/SourceFiles/mokagram/update/mokagram_update.cpp`;
@@ -78,7 +90,7 @@ git merge upstream/mokagram
 - [ ] задать `maintainer` в nfpm-пакетах;
 - [ ] проверить сборку на macOS, Windows и Linux;
 - [ ] проверить вход в аккаунт и миграцию данных (каталог данных новый);
-- [ ] проверить, что автообновления не ходят на `up.moka.wtf`;
+- [ ] проверить, что автообновления не ходят на `up.moka.wtf` и на серверы Telegram;
 - [ ] решить, остаются ли ссылки на канал и форум mokaGram или заменяются на свои;
 - [ ] если нужен свой магазин плагинов и музыкальный бэкенд, поднять их и заменить URL;
 - [ ] сохранить `MOKAGRAM_NOTICE.md` и `BUNNYGRAM_NOTICE.md`.

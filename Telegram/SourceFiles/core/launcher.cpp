@@ -340,6 +340,8 @@ Launcher::~Launcher() {
 }
 
 void Launcher::init() {
+	// Bunnygram: штатный апдейтер Telegram и mokaGram не используется.
+	SetUpdaterDisabledAtStartup();
 	prepareSettings();
 	initQtMessageLogging();
 
