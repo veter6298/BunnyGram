@@ -94,7 +94,7 @@ struct Entry {
 		QNetworkRequest::RedirectPolicyAttribute,
 		QNetworkRequest::NoLessSafeRedirectPolicy);
 	request.setTransferTimeout(kTimeout);
-	request.setRawHeader("User-Agent", "mokaGram-store");
+	request.setRawHeader("User-Agent", "bunnyGram-store");
 	const auto reply = Manager()->get(request);
 	QObject::connect(reply, &QNetworkReply::downloadProgress, [=](
 			qint64 received,
@@ -171,7 +171,7 @@ struct Entry {
 		QNetworkRequest::RedirectPolicyAttribute,
 		QNetworkRequest::NoLessSafeRedirectPolicy);
 	request.setTransferTimeout(kTimeout);
-	request.setRawHeader("User-Agent", "mokaGram-plugin-sources");
+	request.setRawHeader("User-Agent", "bunnyGram-plugin-sources");
 	const auto reply = Manager()->get(request);
 	QObject::connect(reply, &QNetworkReply::downloadProgress, reply, [=](qint64 received, qint64) {
 		if (received > limit) {

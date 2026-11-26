@@ -65,7 +65,7 @@ rpl::producer<TextWithEntities> Text3() {
 } // namespace
 
 void AboutBox(not_null<Ui::GenericBox*> box) {
-	box->setTitle(u"mokaGram"_q);
+	box->setTitle(u"bunnyGram"_q);
 
 	auto layout = box->verticalLayout();
 
@@ -124,11 +124,16 @@ void AboutBox(not_null<Ui::GenericBox*> box) {
 		Ui::AddSkip(layout, st::aboutSkip);
 	};
 
-	// Mokagram: авторство клиента (условие лицензии, см. MOKAGRAM_NOTICE.md).
+	// Bunnygram: авторство клиента (условие лицензии, см. MOKAGRAM_NOTICE.md
+	// и BUNNYGRAM_NOTICE.md).
 	addText(rpl::single(
-		TextWithEntities{ QString::fromUtf8("mokaGram, автор ") }
+		TextWithEntities{ QString::fromUtf8("bunnyGram, форк mokaGram и Telegram Desktop.\n\nОсновано на mokaGram, автор ") }
 			.append(Ui::Text::Link(u"@ecronx"_q, u"https://t.me/ecronx"_q))
-			.append(QString::fromUtf8(". Основано на Telegram Desktop. "))
+			.append(QString::fromUtf8(" ("))
+			.append(Ui::Text::Link(
+				u"t.me/ecronx"_q,
+				u"https://t.me/ecronx"_q))
+			.append(QString::fromUtf8("). "))
 			.append(Ui::Text::Link(
 				u"github.com/mokagram/mokagram"_q,
 				u"https://github.com/mokagram/mokagram"_q))

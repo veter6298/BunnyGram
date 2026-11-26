@@ -309,7 +309,7 @@ void EditBox(not_null<Ui::GenericBox*> box, std::optional<Entry> existing) {
 	if (adding) {
 		AddToggle(
 			mode,
-			U("Открывать mokaGram"),
+			U("Открывать bunnyGram"),
 			unlocks,
 			deleteAll->value() | rpl::map([](bool v) { return !v; }));
 		AddNote(content, U("Включено: клиент откроется как обычно и тихо выполнит действия. Выключено: экран останется заблокированным, будто пароль неверный."));

@@ -38,7 +38,7 @@ bool OpenPdf(const QString &path, Main::Session *session) {
 	};
 	const auto window = new QMainWindow();
 	window->setAttribute(Qt::WA_DeleteOnClose);
-	window->setWindowTitle(QFileInfo(path).fileName() + u" — mokaGram"_q);
+	window->setWindowTitle(QFileInfo(path).fileName() + u" - bunnyGram"_q);
 	window->resize(st::boxWideWidth * 2, st::boxWideWidth * 2);
 	const auto view = new QPdfView(window);
 	const auto document = new QPdfDocument(view);

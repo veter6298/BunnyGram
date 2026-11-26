@@ -452,7 +452,7 @@ void FillInstallBox(
 		content->add(object_ptr<Ui::FlatLabel>(
 			content,
 			U(Mokagram::Lang::Tr(
-				"Источник этого файла не подписан mokaGram: по пути к вам он мог быть подменён. Проверьте, откуда вы его взяли.")),
+				"Источник этого файла не подписан bunnyGram: по пути к вам он мог быть подменён. Проверьте, откуда вы его взяли.")),
 			st::boxLabel), st::boxPadding);
 	}
 
@@ -1179,7 +1179,7 @@ void WelcomeBox(
 	content->add(
 		object_ptr<Ui::FlatLabel>(
 			content,
-			U(Mokagram::Lang::Tr("Несколько настроек для старта. Всё это можно поменять потом в «Настройки mokaGram».")),
+			U(Mokagram::Lang::Tr("Несколько настроек для старта. Всё это можно поменять потом в «Настройки bunnyGram».")),
 			st::boxDividerLabel),
 		QMargins(24, 12, 24, 4));
 
@@ -1525,7 +1525,7 @@ void PluginsBox(
 		FileDialog::GetOpenPath(
 			box.get(),
 			U(Mokagram::Lang::Tr("Выберите плагин")),
-			U(Mokagram::Lang::Tr("Плагин mokaGram (*.plugin);;")) + FileDialog::AllFilesFilter(),
+			U(Mokagram::Lang::Tr("Плагин bunnyGram (*.plugin);;")) + FileDialog::AllFilesFilter(),
 			crl::guard(box.get(), [=](FileDialog::OpenResult &&result) {
 				auto bytes = result.remoteContent;
 				if (bytes.isEmpty() && !result.paths.isEmpty()) {

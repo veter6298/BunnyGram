@@ -841,7 +841,7 @@ void RegisterSettings() {
 		.key = QString::fromUtf8(kAppIconKey),
 		.section = QString::fromUtf8(Mokagram::Lang::Tr("Иконка приложения")),
 		.title = QString::fromUtf8(Mokagram::Lang::Tr("Иконка")),
-		.description = QString::fromUtf8(Mokagram::Lang::Tr("Значок mokaGram в панели задач и в окне. Применяется сразу.")),
+		.description = QString::fromUtf8(Mokagram::Lang::Tr("Значок bunnyGram в панели задач и в окне. Применяется сразу.")),
 		.kind = Settings::Kind::Choice,
 		.defaultValue = 0,
 		.choices = {
@@ -936,10 +936,10 @@ void ShowStickerSetOwner(
 }
 
 QByteArray BrandRewrite(const QByteArray &value) {
-	// Идемпотентно: «mokaGram» не содержит «Telegram». Названия
+	// Идемпотентно: «bunnyGram» не содержит «Telegram». Названия
 	// «Telegram Stars» и «Telegram Business» остаются как есть.
 	static const auto from = QByteArrayLiteral("Telegram");
-	static const auto to = QByteArrayLiteral("mokaGram");
+	static const auto to = QByteArrayLiteral("bunnyGram");
 	static const auto keep = std::vector<QByteArray>{
 		QByteArrayLiteral(" stars"),
 		QByteArrayLiteral(" business"),

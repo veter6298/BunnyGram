@@ -517,7 +517,7 @@ MokagramSettings::MokagramSettings(
 }
 
 rpl::producer<QString> MokagramSettings::title() {
-	return rpl::single(QString::fromUtf8(Mokagram::Lang::Tr("Настройки mokaGram")));
+	return rpl::single(QString::fromUtf8(Mokagram::Lang::Tr("Настройки bunnyGram")));
 }
 
 void MokagramSettings::setupContent() {
@@ -677,7 +677,7 @@ void BuildSectionButtons(SectionBuilder &builder) {
 	const auto showOther = builder.showOther();
 
 	builder.addSectionButton({
-		.title = rpl::single(QString::fromUtf8(Mokagram::Lang::Tr("Настройки mokaGram"))),
+		.title = rpl::single(QString::fromUtf8(Mokagram::Lang::Tr("Настройки bunnyGram"))),
 		.targetSection = MokagramSettings::Id(),
 		.icon = { &Mokagram::Settings::OwnRowIcon() },
 		.keywords = { u"mokagram"_q, u"plugins"_q, u"customize"_q },
@@ -1532,7 +1532,7 @@ Type MainId() {
 	return Main::Id();
 }
 
-// Mokagram: страница «Настройки mokaGram» для кнопки поиска в шапке.
+// Mokagram: страница «Настройки bunnyGram» для кнопки поиска в шапке.
 Type MokagramSettingsId() {
 	return MokagramSettings::Id();
 }

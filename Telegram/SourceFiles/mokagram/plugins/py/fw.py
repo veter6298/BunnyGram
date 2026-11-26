@@ -1217,7 +1217,7 @@ def _fw_cmd_backup(ctx):
             if not me.get('ok'):
                 raise RuntimeError('нет открытой сессии')
             res = json.loads(_moka_native('send_file', json.dumps({
-                'peer': os.environ.get('MOKAGRAM_BACKUP_PEER') or me['peer'], 'path': path, 'caption': 'Бэкап mokaGram %s. Секреты плагинов в него не входят.' % stamp,
+                'peer': os.environ.get('MOKAGRAM_BACKUP_PEER') or me['peer'], 'path': path, 'caption': 'Бэкап bunnyGram %s. Секреты плагинов в него не входят.' % stamp,
                 'kind': 'file', 'silent': True})))
             _fw_private('Бэкап', 'Отправлено в Избранное. Чтобы восстановить, нажмите на файл правой кнопкой и выберите «Восстановить из бэкапа».'
                         if res.get('ok') else 'Не вышло: %s' % res.get('error', ''))
@@ -1234,7 +1234,7 @@ def _moka_restore(path):
         names = z.namelist()
         total = sum(i.file_size for i in z.infolist())
         if total > 100 << 20 or 'manifest.json' not in names:
-            raise ValueError('это не бэкап mokaGram')
+            raise ValueError('это не бэкап bunnyGram')
         if json.loads(z.read('manifest.json')).get('format') != 1:
             raise ValueError('неизвестный формат бэкапа')
         for n in names:
@@ -1270,7 +1270,7 @@ def _moka_restore(path):
                 with z.open(n) as src, open(p, 'wb') as dst:
                     dst.write(src.read(1 << 20))
                 _moka_native('install_plugin_file', json.dumps({'path': p}))
-            _fw_private('Восстановление', 'Данные и настройки применятся при следующем запуске mokaGram. '
+            _fw_private('Восстановление', 'Данные и настройки применятся при следующем запуске bunnyGram. '
                         'Плагины (%d) устанавливаются через обычное окно с правами, подтвердите каждый.' % len(plugins))
         except BaseException as e:
             _fw_private('Восстановление', 'Не вышло: %s' % e)

@@ -952,7 +952,7 @@ void SearchSong(const Track &track, Fn<void(QString)> done) {
 	const auto data = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
 	const auto scoped = QStandardPaths::findExecutable(name, {
 		QCoreApplication::applicationDirPath(),
-		data + u"/mokaGram/tools"_q,
+		data + u"/bunnyGram/tools"_q,
 	});
 	if (!scoped.isEmpty()) return scoped;
 	const auto onPath = QStandardPaths::findExecutable(name);

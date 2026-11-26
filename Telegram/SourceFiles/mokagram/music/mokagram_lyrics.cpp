@@ -494,7 +494,7 @@ void Request(
 		return;
 	}
 	auto request = QNetworkRequest(url);
-	request.setRawHeader("User-Agent", "mokaGram (https://github.com/ecronx/mokagram)");
+	request.setRawHeader("User-Agent", "bunnyGram");
 	request.setTransferTimeout(15000);
 	const auto reply = Net().get(request);
 	LimitReply(reply, kMaxTextBytes);
@@ -991,7 +991,7 @@ void RequestGenius(
 	const auto search = u"https://genius.com/api/search/multi?q="_q
 		+ QString::fromLatin1(QUrl::toPercentEncoding(split.artistName + u" "_q + name));
 	auto request = QNetworkRequest(QUrl(search));
-	request.setRawHeader("User-Agent", "mokaGram");
+	request.setRawHeader("User-Agent", "bunnyGram");
 	request.setTransferTimeout(15000);
 	const auto reply = Net().get(request);
 	LimitReply(reply, kMaxTextBytes);
@@ -1036,7 +1036,7 @@ void RequestGenius(
 			return;
 		}
 		auto pageRequest = QNetworkRequest(QUrl(page));
-		pageRequest.setRawHeader("User-Agent", "mokaGram");
+		pageRequest.setRawHeader("User-Agent", "bunnyGram");
 		pageRequest.setTransferTimeout(15000);
 		const auto pageReply = Net().get(pageRequest);
 		LimitReply(pageReply, kMaxTextBytes);

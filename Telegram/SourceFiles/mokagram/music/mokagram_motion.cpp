@@ -135,7 +135,7 @@ void Request(
 	request.setTransferTimeout(20000);
 	request.setAttribute(QNetworkRequest::RedirectPolicyAttribute,
 		QNetworkRequest::SameOriginRedirectPolicy);
-	request.setRawHeader("User-Agent", "mokaGram/1.1 (Desktop music player)");
+	request.setRawHeader("User-Agent", "bunnyGram/1.1 (Desktop music player)");
 	if (!authorization.isEmpty()) request.setRawHeader("Authorization", authorization);
 	if (!type.isEmpty()) request.setRawHeader("Content-Type", type);
 	if (!range.isEmpty()) request.setRawHeader("Range", range);
@@ -270,7 +270,7 @@ void LoginSpotify() {
 					&& url.path() == u"/mokagram"_q && !code.isEmpty()
 					&& query.queryItemValue(u"state"_q).toUtf8() == state;
 				socket->write(valid
-					? "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nConnection: close\r\n\r\nReturn to mokaGram."
+					? "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nConnection: close\r\n\r\nReturn to bunnyGram."
 					: "HTTP/1.1 400 Bad Request\r\nConnection: close\r\n\r\nInvalid login response.");
 				socket->disconnectFromHost();
 				if (!valid) return;
@@ -685,7 +685,7 @@ void RegisterSoundCloudSettings() {
 	// Строки рисует страница «Музыка» сама, поэтому в общем списке они скрыты.
 	Settings::Register({ .key = u"music.soundcloud_login"_q,
 		.title = QString::fromUtf8(Lang::Tr("Аккаунт SoundCloud")),
-		.description = QString::fromUtf8(Lang::Tr("Лайки из SoundCloud появляются в «Лайкнутых» и в рекомендациях, а лайки в mokaGram уходят в аккаунт. Вход открывается в отдельном окне браузера.")),
+		.description = QString::fromUtf8(Lang::Tr("Лайки из SoundCloud появляются в «Лайкнутых» и в рекомендациях, а лайки в bunnyGram уходят в аккаунт. Вход открывается в отдельном окне браузера.")),
 		.kind = Settings::Kind::String,
 		.hidden = true,
 		.action = SoundCloudSettingsRow });
@@ -760,7 +760,7 @@ void RegisterMotionSettings() {
 		.dependsOn = u"player.spotify_canvas"_q, .hidden = true });
 	add({ .key = u"player.spotify_login"_q,
 		.title = QString::fromUtf8(Lang::Tr("Войти в Spotify")),
-		.description = QString::fromUtf8(Lang::Tr("Вход через браузер. Сеанс Spotify хранится в памяти до выхода из mokaGram.")),
+		.description = QString::fromUtf8(Lang::Tr("Вход через браузер. Сеанс Spotify хранится в памяти до выхода из bunnyGram.")),
 		.kind = Settings::Kind::String, .defaultValue = QString(),
 		.dependsOn = u"player.spotify_canvas"_q, .hidden = true, .action = LoginSpotify });
 	add({ .key = u"player.spotify_logout"_q,

@@ -390,7 +390,7 @@ bool PreviewImport(
 		return fail(Mokagram::Lang::Tr("Это не файл .mokaset."));
 	}
 	if (root.value(u"version"_q).toInt() > kFormatVersion) {
-		return fail(Mokagram::Lang::Tr("Файл сделан более новой версией mokaGram."));
+		return fail(Mokagram::Lang::Tr("Файл сделан более новой версией bunnyGram."));
 	}
 	if (!root.value(u"values"_q).isObject()) {
 		return fail(Mokagram::Lang::Tr("В файле нет значений."));

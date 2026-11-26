@@ -2787,7 +2787,7 @@ void SetTrackLiked(const QString &trackId, bool liked, bool refreshed) {
 					SetTrackLiked(trackId, liked, true);
 				} else {
 					LikeWriteErrorsStream().fire(QString::fromUtf8(
-						Mokagram::Lang::Tr("Вход в SoundCloud устарел: открой soundcloud.com в браузере и войди заново в mokaGram.")));
+						Mokagram::Lang::Tr("Вход в SoundCloud устарел: открой soundcloud.com в браузере и войди заново в bunnyGram.")));
 				}
 			});
 			return;

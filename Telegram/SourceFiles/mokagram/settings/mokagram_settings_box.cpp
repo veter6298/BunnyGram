@@ -1996,7 +1996,7 @@ void CustomizeBox(
 				FileDialog::GetWritePath(
 					box.get(),
 					U(Mokagram::Lang::Tr("Экспорт настроек")),
-					U(Mokagram::Lang::Tr("Набор настроек mokaGram (*.mokaset)")),
+					U(Mokagram::Lang::Tr("Набор настроек bunnyGram (*.mokaset)")),
 					initial,
 					[=](QString &&path) {
 						auto file = QFile(path);
@@ -2020,7 +2020,7 @@ void CustomizeBox(
 				FileDialog::GetOpenPath(
 					box.get(),
 					U(Mokagram::Lang::Tr("Импорт настроек")),
-					U(Mokagram::Lang::Tr("Набор настроек mokaGram (*.mokaset)")),
+					U(Mokagram::Lang::Tr("Набор настроек bunnyGram (*.mokaset)")),
 					[=](FileDialog::OpenResult &&result) {
 						auto data = result.remoteContent;
 						if (data.isEmpty() && !result.paths.isEmpty()) {

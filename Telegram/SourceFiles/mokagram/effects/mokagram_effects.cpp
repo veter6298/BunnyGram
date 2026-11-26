@@ -649,7 +649,7 @@ void RegisterSettings() {
 	add({
 		.key = u"fx.startup.enabled"_q,
 		.title = U(Mokagram::Lang::Tr("Заставка при запуске")),
-		.description = U(Mokagram::Lang::Tr("Знак mokaGram проявляется и растворяется при открытии окна.")),
+		.description = U(Mokagram::Lang::Tr("Знак bunnyGram проявляется и растворяется при открытии окна.")),
 		.kind = S::Kind::Bool,
 		.defaultValue = false,
 	}, U(Mokagram::Lang::Tr("Запуск")), "palette");

@@ -85,7 +85,7 @@ private:
 			: u"https://api.coinbase.com/v2/exchange-rates?currency=USD"_q));
 		networkRequest.setTransferTimeout(10000);
 		networkRequest.setRawHeader("Accept", "application/json");
-		networkRequest.setRawHeader("User-Agent", "mokaGram");
+		networkRequest.setRawHeader("User-Agent", "bunnyGram");
 		const auto reply = _manager.get(networkRequest);
 		QObject::connect(reply, &QNetworkReply::readyRead, this, [=] {
 			if (reply->bytesAvailable() > kMaxReplyBytes) reply->abort();

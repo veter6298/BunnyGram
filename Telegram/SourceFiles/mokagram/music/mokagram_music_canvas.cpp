@@ -156,7 +156,7 @@ void CanvasPlayer::get(
 		int limit,
 		Fn<void(QByteArray)> done) {
 	auto request = QNetworkRequest(url);
-	request.setRawHeader("User-Agent", "mokaGram/1.1 (Desktop music player)");
+	request.setRawHeader("User-Agent", "bunnyGram/1.1 (Desktop music player)");
 	request.setTransferTimeout(10000);
 	request.setAttribute(
 		QNetworkRequest::RedirectPolicyAttribute,

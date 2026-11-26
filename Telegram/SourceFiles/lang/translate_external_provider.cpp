@@ -351,7 +351,7 @@ private:
 		}
 		url.setQuery(query);
 		auto request = QNetworkRequest(url);
-		request.setHeader(QNetworkRequest::UserAgentHeader, u"mokaGram Desktop"_q);
+		request.setHeader(QNetworkRequest::UserAgentHeader, u"bunnyGram Desktop"_q);
 		if (_service == ExternalTranslateService::Microsoft) {
 			request.setRawHeader("Ocp-Apim-Subscription-Key",
 				MicrosoftKey.toUtf8());
@@ -421,7 +421,7 @@ void ConfigureMicrosoftTranslation() {
 	dialog->setAttribute(Qt::WA_DeleteOnClose);
 	dialog->setWindowTitle(QString::fromUtf8(Mokagram::Lang::Tr("Ключ Microsoft Translator")));
 	dialog->setLabelText(QString::fromUtf8(Mokagram::Lang::Tr(
-		"Ключ Azure Translator хранится в памяти до выхода из mokaGram. Пустое значение удаляет ключ.")));
+		"Ключ Azure Translator хранится в памяти до выхода из bunnyGram. Пустое значение удаляет ключ.")));
 	dialog->setTextEchoMode(QLineEdit::Password);
 	QObject::connect(dialog, &QInputDialog::textValueSelected, dialog,
 		[](const QString &value) { MicrosoftKey = value.trimmed().left(256); });

@@ -81,7 +81,7 @@ constexpr auto kApiUrl = "https://saveinator-hooks.xdshka.party";
 constexpr auto kApiKey = "SmPzzuTM6en_vn7AtgUKcLvB_ObB7QqafyGuBGuxl1E";
 constexpr auto kLimit = 10;
 constexpr auto kTimeout = 5 * 60 * 1000;
-constexpr auto kUserAgent = "Saveinator-mokaGram/1.0";
+constexpr auto kUserAgent = "Saveinator-bunnyGram/1.0";
 constexpr auto kPollDelay = 2 * 1000;
 constexpr auto kMaxPollFailures = 3;
 

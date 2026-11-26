@@ -576,7 +576,7 @@ struct Composed {
 				all.height() - fullPad,
 				all.width() - 2 * fullPad,
 				fullPad);
-		p.drawText(mark, Qt::AlignRight | Qt::AlignVCenter, QString::fromUtf8("mokaGram"));
+		p.drawText(mark, Qt::AlignRight | Qt::AlignVCenter, QString::fromUtf8("bunnyGram"));
 	}
 	p.end();
 	result.setDevicePixelRatio(1.);
@@ -809,7 +809,7 @@ void RegisterSettings() {
 	});
 	add({
 		.key = u"quote.watermark"_q,
-		.title = U(Mokagram::Lang::Tr("Подпись mokaGram на скриншоте")),
+		.title = U(Mokagram::Lang::Tr("Подпись bunnyGram на скриншоте")),
 		.kind = S::Kind::Bool,
 		.defaultValue = true,
 	});
@@ -1304,7 +1304,7 @@ void ShowQuoteBoxNow(
 			refresh();
 		}, shadow->lifetime());
 		const auto watermark = layout->add(
-			object_ptr<Ui::Checkbox>(layout, U(Mokagram::Lang::Tr("Подпись mokaGram")), S::Bool(u"quote.watermark"_q), st::defaultCheckbox),
+			object_ptr<Ui::Checkbox>(layout, U(Mokagram::Lang::Tr("Подпись bunnyGram")), S::Bool(u"quote.watermark"_q), st::defaultCheckbox),
 			QMargins(24, 8, 24, 8));
 		watermark->checkedChanges() | rpl::on_next([=](bool on) {
 			S::SetBool(u"quote.watermark"_q, on);
