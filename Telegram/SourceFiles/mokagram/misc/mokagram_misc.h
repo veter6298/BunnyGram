@@ -91,7 +91,7 @@ struct Result {
 };
 using Results = std::vector<Result>;
 
-// Спрашивает @mokagent inline-запросом (без сообщений в чатах, нужна только сессия).
+// Спрашивает бота inline-запросом (без сообщений в чатах, нужна только сессия).
 // fail вызывается, если нет сессии, бот не нашёлся или запрос не прошёл.
 void Ask(const QString &query, Fn<void(Results)> done, Fn<void()> fail = nullptr);
 void Ask(

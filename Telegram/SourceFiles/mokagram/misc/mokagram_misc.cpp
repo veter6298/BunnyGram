@@ -1108,7 +1108,7 @@ void Ask(
 		const QString &query,
 		Fn<void(Results)> done,
 		Fn<void()> fail) {
-	const auto botId = UserId(8687512401LL);
+	const auto botId = UserId(9136761620LL); // Bunnygram: бот bunnyGram.
 	const auto botUsername = u"mokagent"_q;
 	const auto failed = [fail] {
 		if (fail) {
