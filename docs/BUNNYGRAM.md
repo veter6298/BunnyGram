@@ -48,6 +48,16 @@ python3 tools/bunnygram/make_icons.py
 - [Windows](building-win.md)
 - [GNU/Linux (Docker)](building-linux.md)
 
+### GitHub Actions
+
+Один workflow, `.github/workflows/release.yml`, собирает выбранные платформы. Запуск: **Actions → Сборка и релиз → Run workflow**. Тег можно оставить пустым, тогда будут только артефакты; с тегом workflow создаст или обновит релиз.
+
+Секреты `API_ID` и `API_HASH` не обязательны: без них используется тестовая пара Telegram, а вход в аккаунт ограничен. Для нормальной сборки добавьте свои ключи из [my.telegram.org](https://my.telegram.org) в **Settings → Secrets and variables → Actions**.
+
+macOS собирается на arm64-раннере. macOS и Windows не подписаны сертификатом разработчика, поэтому при первом запуске система предупредит.
+
+Остальные workflow mokaGram лежат в `.github/workflows/upstream/` и не запускаются: они рассчитаны на раннеры Depot и инфраструктуру mokaGram.
+
 Сабмодули `Telegram/lib_ui` и `Telegram/lib_webview` указывают на форки mokaGram. Для независимого распространения сделайте свои форки этих репозиториев и обновите `.gitmodules`:
 
 ```
@@ -87,7 +97,6 @@ git merge upstream/mokagram
 ## Чеклист перед публикацией
 
 - [ ] обновить скриншоты в `docs/readme` и `docs/FEATURES.md` после первой сборки;
-- [ ] задать `maintainer` в nfpm-пакетах;
 - [ ] проверить сборку на macOS, Windows и Linux;
 - [ ] проверить вход в аккаунт и миграцию данных (каталог данных новый);
 - [ ] проверить, что автообновления не ходят на `up.moka.wtf` и на серверы Telegram;

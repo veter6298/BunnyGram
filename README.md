@@ -44,6 +44,15 @@
 - [Windows](docs/building-win.md)
 - [GNU/Linux (Docker)](docs/building-linux.md)
 
+### Сборка в GitHub Actions
+
+1. Включите Actions в своём форке: вкладка **Actions**, затем **I understand my workflows, go ahead and enable them**.
+2. По желанию добавьте секреты `API_ID` и `API_HASH` из [my.telegram.org](https://my.telegram.org) в **Settings → Secrets and variables → Actions**. Без них сборка идёт с тестовыми ключами Telegram: приложение запустится, но вход в аккаунт будет ограничен.
+3. Откройте **Actions → Сборка и релиз → Run workflow**, выберите платформы. Тег можно оставить пустым, тогда workflow соберёт только артефакты; с тегом он дополнительно создаст релиз.
+4. Готовые файлы лежат внизу страницы запуска в разделах `linux-packages`, `windows-packages` и `macos-packages`.
+
+Первая сборка долгая: Linux около 1-2 часов, Windows и macOS дольше. Повторные запуски быстрее за счёт кэша библиотек. macOS собирается на arm64-раннере, macOS и Windows не подписаны сертификатом разработчика.
+
 Устройство репозитория и отличия форка: [docs/BUNNYGRAM.md](docs/BUNNYGRAM.md). Исходники Telegram Desktop и список сторонних библиотек: [telegramdesktop/tdesktop](https://github.com/telegramdesktop/tdesktop).
 
 
