@@ -86,7 +86,8 @@ git merge upstream/mokagram
 
 ## Чеклист перед публикацией
 
-- [ ] заменить `OWNER/bunnyGram` в README, LEGAL, BUNNYGRAM_NOTICE.md и `.github/workflows/release.yml`;
+- [ ] обновить скриншоты в `docs/readme` и `docs/FEATURES.md` после первой сборки;
+- [ ] заменить `OWNER/bunnyGram` в README, LEGAL, BUNNYGRAM_NOTICE.md, `core/application.cpp` (changelogLink) и `.github/workflows/release.yml`;
 - [ ] задать `maintainer` в nfpm-пакетах;
 - [ ] проверить сборку на macOS, Windows и Linux;
 - [ ] проверить вход в аккаунт и миграцию данных (каталог данных новый);

@@ -46,7 +46,7 @@
 
 Устройство репозитория и отличия форка: [docs/BUNNYGRAM.md](docs/BUNNYGRAM.md). Исходники Telegram Desktop и список сторонних библиотек: [telegramdesktop/tdesktop](https://github.com/telegramdesktop/tdesktop).
 
-Перед первой сборкой подставьте свой репозиторий вместо `OWNER/bunnyGram` в README, `LEGAL`, `BUNNYGRAM_NOTICE.md`, `docs/BUNNYGRAM.md` и `.github/workflows/release.yml`.
+Перед первой сборкой подставьте свой репозиторий вместо `OWNER/bunnyGram` в README, `LEGAL`, `BUNNYGRAM_NOTICE.md`, `docs/BUNNYGRAM.md`, `core/application.cpp` и `.github/workflows/release.yml`.
 
 ## Что уже переименовано
 
@@ -54,6 +54,7 @@
 - каталог данных (`~/.local/share/bunnyGram` на Linux) и короткое имя интеграции;
 - имя macOS-бандла `bunnyGram` и идентификатор `app.bunnygram.desktop`;
 - Linux-пакеты и desktop-файл, Windows exe, артефакты CI;
+- ссылка «журнал изменений» в «О программе»;
 - иконки и логотип приложения.
 
 Внутренние имена (`Telegram/SourceFiles/mokagram/`, namespace `Mokagram`, ключи настроек, формат `.mokaset`, сервер обновлений) оставлены как в mokaGram, чтобы не ломать совместимость и сборку. Подробности и план дальнейшего переименования: [docs/BUNNYGRAM.md](docs/BUNNYGRAM.md).

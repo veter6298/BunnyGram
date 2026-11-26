@@ -1510,7 +1510,8 @@ bool Application::openInternalUrl(const QString &url, QVariant context) {
 }
 
 QString Application::changelogLink() const {
-	return u"https://telegramdesktop.github.io/tdesktop/changelog/"_q;
+	// Bunnygram: журнал изменений ведёт форк, а не upstream.
+	return u"https://github.com/OWNER/bunnyGram/releases"_q;
 }
 
 bool Application::openCustomUrl(
