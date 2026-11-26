@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Usage: tools/mokagram/publish_update.sh [path/to/Telegram] ["notes"]
+# ВНИМАНИЕ: это инструмент mokaGram. Он публикует на up.moka.wtf и подписывает
+# ключом mokaGram. В bunnyGram автообновления отключены, скрипт не использовать.
+# Usage: tools/bunnygram/publish_update.sh [path/to/Telegram] ["notes"]
 set -euo pipefail
 
 root=$(cd "$(dirname "$0")/../.." && pwd)

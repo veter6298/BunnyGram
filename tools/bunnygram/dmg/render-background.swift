@@ -1,4 +1,4 @@
-// Render with: swift tools/mokagram/dmg/render-background.swift [--light | --minimal]
+// Render with: swift tools/bunnygram/dmg/render-background.swift [--light | --minimal]
 import AppKit
 
 let directory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
@@ -38,7 +38,7 @@ for scale in [1, 2] {
                 .foregroundColor: color(ink), .paragraphStyle: style])
     }
     if minimal {
-        text("mokaGram", top: 56, size: 36, weight: .semibold, ink: 0xffffff)
+        text("bunnyGram", top: 56, size: 36, weight: .semibold, ink: 0xffffff)
         text("Установка для macOS", top: 112, size: 14,
              weight: .regular, ink: 0x8e8e93)
         // Contrast only beneath the filename labels, with the icons on the main background.
@@ -48,22 +48,22 @@ for scale in [1, 2] {
                          xRadius: 18, yRadius: 18).fill()
         }
         text("→", top: 210, size: 64, weight: .regular, ink: 0x0a84ff)
-        text("Перетащите mokaGram в Applications", top: 378, size: 18,
+        text("Перетащите bunnyGram в Applications", top: 378, size: 18,
              weight: .medium, ink: 0xffffff)
-        text("Drag mokaGram into Applications to install", top: 411, size: 14,
+        text("Drag bunnyGram into Applications to install", top: 411, size: 14,
              weight: .regular, ink: 0x8e8e93)
     } else if light {
-        text("mokaGram", top: 56, size: 36, weight: .semibold, ink: 0x171717)
+        text("bunnyGram", top: 56, size: 36, weight: .semibold, ink: 0x171717)
         text("Установка для macOS", top: 112, size: 14,
              weight: .regular, ink: 0x6e6e73)
         text("→", top: 210, size: 64, weight: .regular, ink: 0x0a84ff)
-        text("Перетащите mokaGram в Applications", top: 378, size: 18,
+        text("Перетащите bunnyGram в Applications", top: 378, size: 18,
              weight: .medium, ink: 0x171717)
-        text("Drag mokaGram into Applications to install", top: 411, size: 14,
+        text("Drag bunnyGram into Applications to install", top: 411, size: 14,
              weight: .regular, ink: 0x6e6e73)
     } else {
-        text("mokaGram", top: 40, size: 36, weight: .semibold, ink: 0xffffff)
-        text("Перетащите mokaGram в Applications", top: 99, size: 18,
+        text("bunnyGram", top: 40, size: 36, weight: .semibold, ink: 0xffffff)
+        text("Перетащите bunnyGram в Applications", top: 99, size: 18,
              weight: .medium, ink: 0xffffff)
         // Finder supplies the actual icons and black filename labels on these light surfaces.
         color(0xf1f1f1).setFill()
@@ -72,7 +72,7 @@ for scale in [1, 2] {
                          xRadius: 28, yRadius: 28).fill()
         }
         text("→", top: 228, size: 48, weight: .regular, ink: 0x0a84ff)
-        text("Drag mokaGram into Applications to install", top: 413, size: 15,
+        text("Drag bunnyGram into Applications to install", top: 413, size: 15,
              weight: .regular, ink: 0x8e8e93)
     }
     NSGraphicsContext.restoreGraphicsState()

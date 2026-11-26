@@ -196,23 +196,23 @@ jobs:
           if [ -n "${{ matrix.defines }}" ]; then
             DEFINE="-D ${{ matrix.defines }}=ON"
             echo Define from matrix: $DEFINE
-            echo "ARTIFACT_NAME=Telegram ${{ matrix.defines }}" >> $GITHUB_ENV
+            echo "ARTIFACT_NAME=bunnyGram ${{ matrix.defines }}" >> $GITHUB_ENV
           else
-            echo "ARTIFACT_NAME=Telegram" >> $GITHUB_ENV
+            echo "ARTIFACT_NAME=bunnyGram" >> $GITHUB_ENV
           fi
 
           cmake -Bbuild . -DCMAKE_OSX_ARCHITECTURES="$(uname -m)" -DTDESKTOP_API_TEST=ON $DEFINE
           cmake --build build
-          macdeployqt build/mokaGram.app -no-codesign
+          macdeployqt build/bunnyGram.app -no-codesign
           python3 Telegram/build/sign_mac.py --identity - \
-            --entitlements Telegram/Telegram/Telegram.entitlements build/mokaGram.app
+            --entitlements Telegram/Telegram/Telegram.entitlements build/bunnyGram.app
 
       - name: Move artifact.
         if: env.UPLOAD_ARTIFACT == 'true'
         run: |
           cd $REPO_NAME/build
           mkdir artifact
-          mv mokaGram.app artifact/
+          mv bunnyGram.app artifact/
       - uses: actions/upload-artifact@v7
         if: env.UPLOAD_ARTIFACT == 'true'
         name: Upload artifact.

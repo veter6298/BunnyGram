@@ -1,6 +1,6 @@
 name: Release.
 
-# Релизные сборки mokaGram: Linux (tar.xz, AppImage, deb, rpm, pacman), Windows (zip), macOS (dmg, zip).
+# Релизные сборки bunnyGram: Linux (tar.xz, AppImage, deb, rpm, pacman), Windows (zip), macOS (dmg, zip).
 # Запуск вручную: Actions -> Release -> Run workflow, указать тег (например v0.1.0).
 # Нужны секреты репозитория API_ID и API_HASH (свои ключи Telegram API).
 
@@ -186,72 +186,72 @@ jobs:
           # Значки и файл рабочего стола (общие для всех форматов).
           mkdir -p pkg/icons
           for s in 16 32 48 64 128 256 512; do
-            cp Telegram/Resources/art/icon$s.png pkg/icons/mokagram-$s.png
+            cp Telegram/Resources/art/icon$s.png pkg/icons/bunnygram-$s.png
           done
-          cat > pkg/mokagram.desktop <<'EOF'
+          cat > pkg/bunnygram.desktop <<'EOF'
           [Desktop Entry]
-          Name=mokaGram
+          Name=bunnyGram
           Comment=Telegram client with plugins
-          Exec=/opt/mokagram/Telegram -- %U
-          Icon=mokagram
+          Exec=/opt/bunnygram/Telegram -- %U
+          Icon=bunnygram
           Terminal=false
           StartupWMClass=TelegramDesktop
           Type=Application
           Categories=Chat;Network;InstantMessaging;Qt;
           MimeType=x-scheme-handler/tg;x-scheme-handler/tonsite;x-scheme-handler/ton;
-          Keywords=tg;chat;im;messaging;messenger;mokagram;
+          Keywords=tg;chat;im;messaging;messenger;bunnygram;
           EOF
-          sed -i 's/^          //' pkg/mokagram.desktop
+          sed -i 's/^          //' pkg/bunnygram.desktop
 
           # tar.xz
-          mkdir -p tarball/mokaGram
-          cp bin/Telegram bin/Updater tarball/mokaGram/
-          cp -R bin/TelegramHelpers tarball/mokaGram/
-          tar -C tarball -cJf dist/mokagram-linux-x64.tar.xz mokaGram
+          mkdir -p tarball/bunnyGram
+          cp bin/Telegram bin/Updater tarball/bunnyGram/
+          cp -R bin/TelegramHelpers tarball/bunnyGram/
+          tar -C tarball -cJf dist/bunnygram-linux-x64.tar.xz bunnyGram
 
           # AppImage
           mkdir -p AppDir/usr/bin
           cp bin/Telegram bin/Updater AppDir/usr/bin/
           cp -R bin/TelegramHelpers AppDir/usr/bin/
-          sed 's#^Exec=.*#Exec=Telegram -- %U#' pkg/mokagram.desktop > AppDir/mokagram.desktop
-          cp pkg/icons/mokagram-512.png AppDir/mokagram.png
+          sed 's#^Exec=.*#Exec=Telegram -- %U#' pkg/bunnygram.desktop > AppDir/bunnygram.desktop
+          cp pkg/icons/bunnygram-512.png AppDir/bunnygram.png
           ln -s usr/bin/Telegram AppDir/AppRun
           curl -sSL -o appimagetool https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod +x appimagetool
-          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir dist/mokagram-x86_64.AppImage
+          ARCH=x86_64 ./appimagetool --appimage-extract-and-run AppDir dist/bunnygram-x86_64.AppImage
 
           # deb, rpm, pacman через nfpm
           curl -sSL https://github.com/goreleaser/nfpm/releases/download/v2.43.0/nfpm_2.43.0_Linux_x86_64.tar.gz | tar xz nfpm
           cat > nfpm.yaml <<EOF
-          name: mokagram
+          name: bunnygram
           arch: amd64
           platform: linux
           version: ${VERSION}
           section: net
-          maintainer: ecronx <noreply@github.com>
-          description: mokaGram, клиент Telegram с плагинами
-          homepage: https://github.com/mokagram/mokagram
+          maintainer: bunnyGram maintainers <noreply@example.com>
+          description: bunnyGram, клиент Telegram с плагинами
+          homepage: https://github.com/OWNER/bunnyGram
           license: GPL-3.0-or-later
           contents:
             - src: bin/Telegram
-              dst: /opt/mokagram/Telegram
+              dst: /opt/bunnygram/Telegram
               file_info: { mode: 0755 }
             - src: bin/Updater
-              dst: /opt/mokagram/Updater
+              dst: /opt/bunnygram/Updater
               file_info: { mode: 0755 }
             - src: bin/TelegramHelpers/TelegramWidgetHelper
-              dst: /opt/mokagram/TelegramHelpers/TelegramWidgetHelper
+              dst: /opt/bunnygram/TelegramHelpers/TelegramWidgetHelper
               file_info: { mode: 0755 }
-            - src: /opt/mokagram/Telegram
-              dst: /usr/bin/mokagram
+            - src: /opt/bunnygram/Telegram
+              dst: /usr/bin/bunnygram
               type: symlink
-            - src: pkg/mokagram.desktop
-              dst: /usr/share/applications/mokagram.desktop
+            - src: pkg/bunnygram.desktop
+              dst: /usr/share/applications/bunnygram.desktop
           EOF
           for s in 16 32 48 64 128 256 512; do
             cat >> nfpm.yaml <<EOF
-            - src: pkg/icons/mokagram-$s.png
-              dst: /usr/share/icons/hicolor/${s}x${s}/apps/mokagram.png
+            - src: pkg/icons/bunnygram-$s.png
+              dst: /usr/share/icons/hicolor/${s}x${s}/apps/bunnygram.png
           EOF
           done
           sed -i 's/^          //' nfpm.yaml
@@ -264,7 +264,7 @@ jobs:
         run: |
           dpkg-deb -I dist/*.deb | head -12
           dpkg-deb -c dist/*.deb | head -15
-          test "$(stat -c %s dist/mokagram-x86_64.AppImage)" -gt 1000000
+          test "$(stat -c %s dist/bunnygram-x86_64.AppImage)" -gt 1000000
 
       - uses: actions/upload-artifact@v7
         with:
@@ -485,24 +485,24 @@ jobs:
           if (-not (Get-ChildItem stage -Filter "python3*.dll" | Where-Object Name -match '^python3\d+\.dll$')) { throw "нет pythonNNN.dll в пакете" }
           $need = [regex]::Matches([Text.Encoding]::ASCII.GetString([IO.File]::ReadAllBytes("stage\Telegram.exe")), 'python3\d+\.dll') | ForEach-Object Value | Sort-Object -Unique | Where-Object { $_ -ne 'python3.dll' }
           foreach ($n in $need) { if (-not (Test-Path "stage\$n")) { throw "exe требует $n, в пакете её нет" } }
-          # Архив с одной папкой mokaGram\: в проводнике виден только mokaGram.exe,
-          # остальное (Updater, рантайм Python) помечено скрытым; exe называется mokaGram.exe.
+          # Архив с одной папкой bunnyGram\: в проводнике виден только bunnyGram.exe,
+          # остальное (Updater, рантайм Python) помечено скрытым; exe называется bunnyGram.exe.
           @'
           from pathlib import Path
           from shutil import copyfileobj
           from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
           stage = Path("stage")
-          with ZipFile(r"dist\mokagram-win-x64.zip", "w", ZIP_DEFLATED, compresslevel=6) as z:
+          with ZipFile(r"dist\bunnygram-win-x64.zip", "w", ZIP_DEFLATED, compresslevel=6) as z:
               for source in sorted(stage.rglob("*")):
                   if not source.is_file():
                       continue
                   name = source.relative_to(stage).as_posix()
                   if name == "Telegram.exe":
-                      name = "mokaGram.exe"
-                  entry = ZipInfo("mokaGram/" + name, date_time=(2026, 1, 1, 0, 0, 0))
+                      name = "bunnyGram.exe"
+                  entry = ZipInfo("bunnyGram/" + name, date_time=(2026, 1, 1, 0, 0, 0))
                   entry.compress_type = ZIP_DEFLATED
                   entry.create_system = 0
-                  entry.external_attr = 0x20 | (0 if name == "mokaGram.exe" else 0x02)
+                  entry.external_attr = 0x20 | (0 if name == "bunnyGram.exe" else 0x02)
                   with source.open("rb") as src, z.open(entry, "w") as dst:
                       copyfileobj(src, dst)
           '@ | python -
@@ -610,13 +610,13 @@ jobs:
           # Подпись «ad hoc»: без неё приложение на arm64 не запустится. Это не нотаризация,
           # при первом запуске macOS спросит подтверждение (ПКМ -> Открыть).
           python3 ../../Telegram/build/sign_mac.py --identity - \
-            --entitlements ../../Telegram/Telegram/Telegram.entitlements mokaGram.app
+            --entitlements ../../Telegram/Telegram/Telegram.entitlements bunnyGram.app
           mkdir -p "$GITHUB_WORKSPACE/dist"
-          ditto -c -k --keepParent mokaGram.app "$GITHUB_WORKSPACE/dist/mokagram-macos-arm64.zip"
-          python3 -m venv "$RUNNER_TEMP/mokagram-dmg"
-          "$RUNNER_TEMP/mokagram-dmg/bin/python" -m pip install dmgbuild==1.6.7
-          "$RUNNER_TEMP/mokagram-dmg/bin/python" ../../tools/mokagram/package_dmg.py \
-            mokaGram.app "$GITHUB_WORKSPACE/dist/mokagram-macos-arm64.dmg"
+          ditto -c -k --keepParent bunnyGram.app "$GITHUB_WORKSPACE/dist/bunnygram-macos-arm64.zip"
+          python3 -m venv "$RUNNER_TEMP/bunnygram-dmg"
+          "$RUNNER_TEMP/bunnygram-dmg/bin/python" -m pip install dmgbuild==1.6.7
+          "$RUNNER_TEMP/bunnygram-dmg/bin/python" ../../tools/bunnygram/package_dmg.py \
+            bunnyGram.app "$GITHUB_WORKSPACE/dist/bunnygram-macos-arm64.dmg"
           ls -la "$GITHUB_WORKSPACE/dist"
 
       - uses: actions/upload-artifact@v7
@@ -652,5 +652,5 @@ jobs:
             exit 0
           fi
           gh release create "$TAG" assets/* --repo "${{ github.repository }}" $FLAGS \
-            --title "mokaGram $TAG" \
-            --notes "Сборки mokaGram $TAG: Linux (tar.xz, AppImage, deb, rpm, pacman), Windows (zip), macOS (dmg, zip). macOS и Windows без подписи разработчика: система может предупредить при первом запуске."
+            --title "bunnyGram $TAG" \
+            --notes "Сборки bunnyGram $TAG: Linux (tar.xz, AppImage, deb, rpm, pacman), Windows (zip), macOS (dmg, zip). macOS и Windows без подписи разработчика: система может предупредить при первом запуске."

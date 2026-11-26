@@ -102,9 +102,9 @@ jobs:
           if [ -n "${{ matrix.defines }}" ]; then
             DEFINE="-D ${{ matrix.defines }}=ON"
             echo Define from matrix: $DEFINE
-            echo "ARTIFACT_NAME=Telegram ${{ matrix.defines }}" >> $GITHUB_ENV
+            echo "ARTIFACT_NAME=bunnyGram ${{ matrix.defines }}" >> $GITHUB_ENV
           else
-            echo "ARTIFACT_NAME=Telegram" >> $GITHUB_ENV
+            echo "ARTIFACT_NAME=bunnyGram" >> $GITHUB_ENV
           fi
 
           ccache -z
@@ -186,8 +186,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           cd out/Debug/artifact
-          tar -cJf mokagram-linux-x64.tar.xz Telegram Updater TelegramHelpers
-          gh release create "${{ inputs.release_tag }}" mokagram-linux-x64.tar.xz \
+          tar -cJf bunnygram-linux-x64.tar.xz Telegram Updater TelegramHelpers
+          gh release create "${{ inputs.release_tag }}" bunnygram-linux-x64.tar.xz \
             --repo "${{ github.repository }}" --prerelease \
-            --title "mokaGram ${{ inputs.release_tag }} (тестовая сборка)" \
+            --title "bunnyGram ${{ inputs.release_tag }} (тестовая сборка)" \
             --notes "Тестовая сборка для Linux x64. Debug-конфигурация, собрана на Depot."

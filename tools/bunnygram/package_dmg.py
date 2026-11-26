@@ -24,12 +24,12 @@ background_name = {
 }[args.variant]
 background_dir = Path(__file__).resolve().parent / "dmg"
 volume = {
-    "dark": "mokaGram Installer", "light": "mokaGram Light Installer",
-    "minimal": "mokaGram Minimal Installer",
+    "dark": "bunnyGram Installer", "light": "bunnyGram Light Installer",
+    "minimal": "bunnyGram Minimal Installer",
 }[args.variant]
 # A large solid canvas keeps the background when Finder is expanded. Compress
 # the multi-resolution TIFF before copying it into the image to keep it small.
-with tempfile.TemporaryDirectory(prefix="mokagram-dmg-") as temporary:
+with tempfile.TemporaryDirectory(prefix="bunnygram-dmg-") as temporary:
     combined = Path(temporary) / "combined.tiff"
     background = Path(temporary) / "background.tiff"
     subprocess.run(["/usr/bin/tiffutil", "-cathidpicheck",
@@ -40,14 +40,14 @@ with tempfile.TemporaryDirectory(prefix="mokagram-dmg-") as temporary:
                     "-out", str(background)], check=True)
     dmgbuild.build_dmg(str(output), volume, lookForHiDPI=False, settings={
         "format": "UDZO",
-        "files": [(str(app), "mokaGram.app")],
+        "files": [(str(app), "bunnyGram.app")],
         "symlinks": {"Applications": "/Applications"},
         "background": str(background),
         "window_rect": ((160, 160), (800, 500)),
-        "icon_locations": {"mokaGram.app": (220, 265), "Applications": (580, 265)},
+        "icon_locations": {"bunnyGram.app": (220, 265), "Applications": (580, 265)},
         "icon_size": 96,
         "text_size": 14,
-        "hide_extension": ["mokaGram.app"],
+        "hide_extension": ["bunnyGram.app"],
         "default_view": "icon-view",
         "include_icon_view_settings": True,
         "include_list_view_settings": False,
