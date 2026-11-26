@@ -1567,6 +1567,7 @@
 	{ "[%1] send_message: больше 20 сообщений в минуту, отказ", "[%1] send_message: over 20 messages per minute, denied" },
 	{ "[%1] send_message: больше 5 получателей за 10 минут, отказ", "[%1] send_message: over 5 recipients in 10 minutes, denied" },
 	{ "[%1] события сообщений: нет права messages.read, не подписан", "[%1] message events: missing messages.read permission" },
+	{ "Источник этого файла не подписан bunnyGram: по пути к вам он мог быть подменён. Проверьте, откуда вы его взяли.", "This file's source is not signed by bunnyGram: it could have been tampered with in transit. Check where you got it from." },
 	{ "[%1] message_filter_hook: нет права messages.read", "[%1] message_filter_hook: missing messages.read permission" },
 	{ "в архиве слишком много файлов", "too many files in archive" },
 	{ "файл в архиве слишком большой", "archive entry is too large" },
