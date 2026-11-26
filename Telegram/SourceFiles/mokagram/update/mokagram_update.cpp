@@ -45,6 +45,10 @@ namespace {
 
 constexpr auto kBaseUrl
 	= "https://up.moka.wtf/";
+// Bunnygram: автообновления mokaGram отключены. Манифест подписан ключом
+// mokaGram, поэтому форк не должен принимать и ставить эти обновления.
+// Когда у bunnyGram появится свой сервер обновлений и свой ключ, тогда включить.
+constexpr auto kUpdatesEnabled = false;
 constexpr auto kManifestName = "update.json";
 constexpr auto kPlatform = "linux-x64";
 constexpr auto kFirstCheckDelay = 15 * 1000;
@@ -134,7 +138,7 @@ void HardenRequest(QNetworkRequest &request, int timeout) {
 		QNetworkRequest::RedirectPolicyAttribute,
 		QNetworkRequest::NoLessSafeRedirectPolicy);
 	request.setTransferTimeout(timeout);
-	request.setRawHeader("User-Agent", "mokaGram-updater");
+	request.setRawHeader("User-Agent", "bunnyGram-updater");
 }
 
 [[nodiscard]] QString TargetPath() {
@@ -311,7 +315,7 @@ void ShowRestart(const Manifest &manifest) {
 		return;
 	}
 	show->showBox(Ui::MakeConfirmBox({
-		.text = QString::fromUtf8("mokaGram ")
+		.text = QString::fromUtf8("bunnyGram ")
 			+ manifest.title
 			+ QString::fromUtf8(
 				Mokagram::Lang::Tr(" установлен. Новая версия заработает после перезапуска.")),
@@ -332,11 +336,11 @@ void Download(const Manifest &manifest) {
 	if (!QFileInfo(cExeDir()).isWritable()) {
 		Toast(QString::fromUtf8(Mokagram::Lang::Tr("Нет прав на запись в "))
 			+ cExeDir()
-			+ QString::fromUtf8(Mokagram::Lang::Tr(", обновите mokaGram вручную.")));
+			+ QString::fromUtf8(Mokagram::Lang::Tr(", обновите bunnyGram вручную.")));
 		return;
 	}
 	state.stage = Stage::Downloading;
-	Toast(QString::fromUtf8(Mokagram::Lang::Tr("Скачиваю mokaGram ")) + manifest.title + u"..."_q);
+	Toast(QString::fromUtf8(Mokagram::Lang::Tr("Скачиваю bunnyGram ")) + manifest.title + u"..."_q);
 	auto request = QNetworkRequest(
 		QUrl(QString::fromLatin1(kBaseUrl) + manifest.file));
 	request.setAttribute(
@@ -390,7 +394,7 @@ void Offer(const Manifest &manifest, bool manual) {
 	if (!show) {
 		return;
 	}
-	auto text = QString::fromUtf8(Mokagram::Lang::Tr("Вышел mokaGram ")) + manifest.title + u"."_q;
+	auto text = QString::fromUtf8(Mokagram::Lang::Tr("Вышел bunnyGram ")) + manifest.title + u"."_q;
 	if (!manifest.notes.isEmpty()) {
 		text += u"\n\n"_q + manifest.notes;
 	}
@@ -415,7 +419,7 @@ void Offer(const Manifest &manifest, bool manual) {
 
 void Check(bool manual) {
 	auto &state = Data();
-	if (!UpdatesAllowed()) {
+	if (!kUpdatesEnabled || !UpdatesAllowed()) {
 		if (manual) {
 			Toast(QString::fromUtf8(
 				Mokagram::Lang::Tr("В этой сборке обновления выключены.")));
@@ -456,8 +460,8 @@ void Check(bool manual) {
 			if (manual) {
 				Toast((Data().installed > kVersion)
 					? QString::fromUtf8(
-						Mokagram::Lang::Tr("Обновление уже установлено, перезапустите mokaGram."))
-					: QString::fromUtf8(Mokagram::Lang::Tr("У вас последняя версия mokaGram.")));
+						Mokagram::Lang::Tr("Обновление уже установлено, перезапустите bunnyGram."))
+					: QString::fromUtf8(Mokagram::Lang::Tr("У вас последняя версия bunnyGram.")));
 			}
 			return;
 		}
@@ -497,11 +501,11 @@ void RegisterSettings() {
 		.description = QString::fromUtf8(
 			Mokagram::Lang::Tr("При запуске и раз в 6 часов смотреть, вышла ли новая версия.")),
 		.kind = Settings::Kind::Bool,
-		.defaultValue = true,
+		.defaultValue = false,
 		.category = u"other"_q,
 		.sectionIcon = u"update"_q,
 		.sectionNote = QString::fromUtf8(
-			Mokagram::Lang::Tr("Обновления приходят с up.moka.wtf и ставятся, только если подпись совпала.")),
+			Mokagram::Lang::Tr("В сборке bunnyGram автообновления отключены: обновляйтесь вручную из репозитория форка.")),
 	});
 	Settings::Register({
 		.key = QString::fromLatin1(kCheckKey),
