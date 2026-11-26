@@ -51,8 +51,8 @@ python3 tools/bunnygram/make_icons.py
 Сабмодули `Telegram/lib_ui` и `Telegram/lib_webview` указывают на форки mokaGram. Для независимого распространения сделайте свои форки этих репозиториев и обновите `.gitmodules`:
 
 ```
-git submodule set-url Telegram/lib_ui https://github.com/OWNER/lib_ui.git
-git submodule set-url Telegram/lib_webview https://github.com/OWNER/lib_webview.git
+git submodule set-url Telegram/lib_ui https://github.com/veter6298/lib_ui.git
+git submodule set-url Telegram/lib_webview https://github.com/veter6298/lib_webview.git
 git submodule sync
 git submodule update --init --recursive
 ```
@@ -60,7 +60,7 @@ git submodule update --init --recursive
 Клонировать форк нужно с сабмодулями:
 
 ```
-git clone --recursive https://github.com/OWNER/bunnyGram.git
+git clone --recursive https://github.com/veter6298/bunnyGram.git
 ```
 
 ## Обновления
@@ -87,7 +87,6 @@ git merge upstream/mokagram
 ## Чеклист перед публикацией
 
 - [ ] обновить скриншоты в `docs/readme` и `docs/FEATURES.md` после первой сборки;
-- [ ] заменить `OWNER/bunnyGram` в README, LEGAL, BUNNYGRAM_NOTICE.md, `core/application.cpp` (changelogLink) и `.github/workflows/release.yml`;
 - [ ] задать `maintainer` в nfpm-пакетах;
 - [ ] проверить сборку на macOS, Windows и Linux;
 - [ ] проверить вход в аккаунт и миграцию данных (каталог данных новый);

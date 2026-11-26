@@ -46,7 +46,6 @@
 
 Устройство репозитория и отличия форка: [docs/BUNNYGRAM.md](docs/BUNNYGRAM.md). Исходники Telegram Desktop и список сторонних библиотек: [telegramdesktop/tdesktop](https://github.com/telegramdesktop/tdesktop).
 
-Перед первой сборкой подставьте свой репозиторий вместо `OWNER/bunnyGram` в README, `LEGAL`, `BUNNYGRAM_NOTICE.md`, `docs/BUNNYGRAM.md`, `core/application.cpp` и `.github/workflows/release.yml`.
 
 ## Что уже переименовано
 

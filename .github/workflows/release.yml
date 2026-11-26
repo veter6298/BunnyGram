@@ -228,9 +228,9 @@ jobs:
           platform: linux
           version: ${VERSION}
           section: net
-          maintainer: bunnyGram maintainers <noreply@example.com>
+          maintainer: veter6298 <veter6298@users.noreply.github.com>
           description: bunnyGram, клиент Telegram с плагинами
-          homepage: https://github.com/OWNER/bunnyGram
+          homepage: https://github.com/veter6298/bunnyGram
           license: GPL-3.0-or-later
           contents:
             - src: bin/Telegram
