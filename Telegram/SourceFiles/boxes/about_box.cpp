@@ -127,7 +127,9 @@ void AboutBox(not_null<Ui::GenericBox*> box) {
 	// Bunnygram: авторство клиента (условие лицензии, см. MOKAGRAM_NOTICE.md
 	// и BUNNYGRAM_NOTICE.md).
 	addText(rpl::single(
-		TextWithEntities{ QString::fromUtf8("bunnyGram, форк mokaGram и Telegram Desktop.\n\nОсновано на mokaGram, автор ") }
+		TextWithEntities{ QString::fromUtf8(
+			"bunnyGram, форк mokaGram и Telegram Desktop.\n\n"
+			"Основано на mokaGram, автор ") }
 			.append(Ui::Text::Link(u"@ecronx"_q, u"https://t.me/ecronx"_q))
 			.append(QString::fromUtf8(" ("))
 			.append(Ui::Text::Link(
@@ -137,7 +139,11 @@ void AboutBox(not_null<Ui::GenericBox*> box) {
 			.append(Ui::Text::Link(
 				u"github.com/mokagram/mokagram"_q,
 				u"https://github.com/mokagram/mokagram"_q))
-			.append(QString::fromUtf8("\n\nИсходники mokaGram можно использовать только с указанием авторства: автор @ecronx (t.me/ecronx) и ссылка на репозиторий должны остаться в README и в этом окне."))));
+			.append(QString::fromUtf8(
+				"\n\nИсходники mokaGram можно использовать только "
+				"с указанием авторства: автор @ecronx (t.me/ecronx) "
+				"и ссылка на репозиторий должны остаться в README "
+				"и в этом окне."))));
 	addText(Text1());
 	addText(Text2());
 	addText(Text3());
