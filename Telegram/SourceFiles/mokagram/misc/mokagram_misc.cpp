@@ -1263,8 +1263,8 @@ struct TeamEntry {
 	bool blue;
 };
 constexpr TeamEntry kTeam[] = {
-	{ "litteraliy", "Разработчик mokaGram", "Maintainer mokaGram", true },
-	{ "xdshka", "Разработчик mokaGram", "Maintainer mokaGram", true },
+	{ "litteraliy", "Разработчик bunnyGram", "Maintainer bunnyGram", true },
+	{ "xdshka", "Разработчик bunnyGram", "Maintainer bunnyGram", true },
 };
 constexpr auto kOwnerId = 6612638154ULL;
 
@@ -1291,8 +1291,8 @@ constexpr auto kBlueIcon = 5397879498492389616ULL;
 [[nodiscard]] const char *TeamRole(not_null<UserData*> user) {
 	if (peerToUser(user->id).bare == kOwnerId) {
 		return Russian()
-			? Mokagram::Lang::Tr("Разработчик и владелец mokaGram")
-			: "Developer and owner of mokaGram";
+			? Mokagram::Lang::Tr("Разработчик и владелец bunnyGram")
+			: "Developer and owner of bunnyGram";
 	}
 	for (const auto &username : user->usernames()) {
 		for (const auto &entry : kTeam) {
@@ -1332,7 +1332,7 @@ Ui::BotVerifyDetails Synthetic(not_null<UserData*> user) {
 		.description = TextWithEntities{
 			(!role && custom && !custom->text.isEmpty())
 				? custom->text
-				: QString::fromUtf8(role ? role : (state.remote.contains(id) ? Mokagram::Lang::Tr("Поддерживает mokaGram") : Mokagram::Lang::Tr("Разработчик mokaGram"))),
+				: QString::fromUtf8(role ? role : (state.remote.contains(id) ? Mokagram::Lang::Tr("Поддерживает bunnyGram") : Mokagram::Lang::Tr("Разработчик bunnyGram"))),
 		},
 	};
 }
