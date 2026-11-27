@@ -159,7 +159,7 @@ jobs:
           cp -R out/Release/TelegramHelpers artifact/
           test -x artifact/TelegramHelpers/TelegramWidgetHelper
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         name: Upload binaries.
         with:
           name: linux-bin
@@ -271,7 +271,7 @@ jobs:
           dpkg-deb -c dist/*.deb | head -15
           test "$(stat -c %s dist/bunnygram-x86_64.AppImage)" -gt 1000000
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: linux-packages
           path: dist/
@@ -522,7 +522,7 @@ jobs:
           '@ | python -
           Get-ChildItem dist
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: windows-packages
           path: dist\
@@ -633,7 +633,7 @@ jobs:
             bunnyGram.app "$GITHUB_WORKSPACE/dist/bunnygram-macos-arm64.dmg"
           ls -la "$GITHUB_WORKSPACE/dist"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: macos-packages
           path: dist/
