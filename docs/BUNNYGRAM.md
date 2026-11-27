@@ -88,6 +88,9 @@ git clone --recursive https://github.com/veter6298/bunnyGram.git
 /admin
 /grant <id> [уровень 1-3]
 /revoke <id>
+/blue <id> - выдать синюю галочку
+/unblue <id> - убрать синюю галочку
+/badge <id> <emoji_id> <caption> - свой значок (премиум эмодзи + надпись)
 /list
 ```
 
