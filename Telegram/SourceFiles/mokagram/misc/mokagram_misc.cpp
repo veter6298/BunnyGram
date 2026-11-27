@@ -1180,7 +1180,9 @@ struct State {
 	std::map<quint64, Custom> custom;
 	base::flat_set<quint64> users;
 	base::flat_set<quint64> remote;
+	base::flat_set<quint64> blueUsers;
 	DocumentId icon = 5402618655601109041ULL;
+	DocumentId blueIcon = 5397879498492389616ULL;
 	bool loaded = false;
 	bool fresh = false; // список уже получен от бота в этом запуске
 	bool inFlight = false;
@@ -1206,7 +1208,7 @@ void Load() {
 	state.loaded = true;
 	// По умолчанию галочка у владельца клиента; список можно подменить файлом
 	// tdata/moka_badges.json: {"emoji_id": "...", "users": [id, ...]}.
-	state.users.emplace(6612638154ULL);
+	state.users.emplace(8897822189ULL);
 	// Последний полученный список: значки видны сразу при запуске, до ответа бота.
 	auto cache = QFile(cWorkingDir() + u"tdata/moka_badges_cache.json"_q);
 	if (cache.open(QIODevice::ReadOnly)) {
@@ -1214,6 +1216,15 @@ void Load() {
 		const auto icon = object.value(u"emoji_id"_q).toVariant().toString().toULongLong();
 		if (icon) {
 			state.icon = icon;
+		}
+		const auto blueIcon = object.value(u"blue_icon"_q).toVariant().toString().toULongLong();
+		if (blueIcon) {
+			state.blueIcon = blueIcon;
+		}
+		for (const auto &value : object.value(u"blue_users"_q).toArray()) {
+			if (const auto id = value.toVariant().toULongLong()) {
+				state.blueUsers.emplace(id);
+			}
 		}
 		for (const auto &value : object.value(u"users"_q).toArray()) {
 			if (const auto id = value.toVariant().toULongLong()) {
@@ -1242,6 +1253,15 @@ void Load() {
 	const auto icon = object.value(u"emoji_id"_q).toVariant().toString().toULongLong();
 	if (icon) {
 		state.icon = icon;
+	}
+	const auto blueIcon = object.value(u"blue_icon"_q).toVariant().toString().toULongLong();
+	if (blueIcon) {
+		state.blueIcon = blueIcon;
+	}
+	for (const auto &value : object.value(u"blue_users"_q).toArray()) {
+		if (const auto id = value.toVariant().toULongLong()) {
+			state.blueUsers.emplace(id);
+		}
 	}
 	for (const auto &value : object.value(u"users"_q).toArray()) {
 		if (const auto id = value.toVariant().toULongLong()) {
@@ -1275,7 +1295,9 @@ constexpr auto kOwnerId = 6612638154ULL;
 constexpr auto kBlueIcon = 5397879498492389616ULL;
 
 [[nodiscard]] bool BlueIcon(not_null<UserData*> user) {
-	if (peerToUser(user->id).bare == kOwnerId) {
+	Load();
+	const auto id = peerToUser(user->id).bare;
+	if (id == kOwnerId || Data().blueUsers.contains(id)) {
 		return true;
 	}
 	for (const auto &username : user->usernames()) {
@@ -1327,7 +1349,7 @@ Ui::BotVerifyDetails Synthetic(not_null<UserData*> user) {
 	return Ui::BotVerifyDetails{
 		.botId = UserId(0),
 		.iconId = BlueIcon(user)
-			? kBlueIcon
+			? (state.blueIcon ? state.blueIcon : kBlueIcon)
 			: (custom && custom->icon ? custom->icon : state.icon),
 		.description = TextWithEntities{
 			(!role && custom && !custom->text.isEmpty())
@@ -1343,6 +1365,10 @@ void SaveCache() {
 	for (const auto id : state.remote) {
 		users.append(QString::number(id));
 	}
+	auto blueUsers = QJsonArray();
+	for (const auto id : state.blueUsers) {
+		blueUsers.append(QString::number(id));
+	}
 	auto customArray = QJsonArray();
 	for (const auto &[id, value] : state.custom) {
 		customArray.append(QJsonArray{
@@ -1355,7 +1381,9 @@ void SaveCache() {
 	if (file.open(QIODevice::WriteOnly)) {
 		file.write(QJsonDocument(QJsonObject{
 			{ u"emoji_id"_q, QString::number(state.icon) },
+			{ u"blue_icon"_q, QString::number(state.blueIcon) },
 			{ u"users"_q, users },
+			{ u"blue_users"_q, blueUsers },
 			{ u"custom"_q, customArray },
 		}).toJson(QJsonDocument::Compact));
 	}
@@ -1365,7 +1393,9 @@ void SaveCache() {
 void ApplyRemote(
 		const std::vector<quint64> &ids,
 		quint64 icon,
-		std::map<quint64, Custom> custom) {
+		std::map<quint64, Custom> custom,
+		const base::flat_set<quint64> *blueUsers = nullptr,
+		quint64 blueIcon = 0) {
 	auto &state = Data();
 	state.fresh = true;
 	state.inFlight = false;
@@ -1377,6 +1407,11 @@ void ApplyRemote(
 	auto same = (!icon || icon == state.icon)
 		&& received.size() == state.remote.size()
 		&& custom.size() == state.custom.size();
+	if (blueUsers) {
+		same = same
+			&& (!blueIcon || blueIcon == state.blueIcon)
+			&& blueUsers->size() == state.blueUsers.size();
+	}
 	for (const auto id : received) {
 		if (!state.remote.contains(id)) {
 			same = false;
@@ -1394,6 +1429,14 @@ void ApplyRemote(
 			}
 		}
 	}
+	if (same && blueUsers) {
+		for (const auto id : *blueUsers) {
+			if (!state.blueUsers.contains(id)) {
+				same = false;
+				break;
+			}
+		}
+	}
 	if (same) {
 		return;
 	}
@@ -1402,12 +1445,24 @@ void ApplyRemote(
 	for (const auto &[id, value] : state.custom) {
 		changedIds.emplace(id);
 	}
+	for (const auto id : state.blueUsers) {
+		changedIds.emplace(id);
+	}
 	state.custom = std::move(custom);
 	for (const auto &[id, value] : state.custom) {
 		changedIds.emplace(id);
 	}
 	if (icon) {
 		state.icon = icon;
+	}
+	if (blueIcon) {
+		state.blueIcon = blueIcon;
+	}
+	if (blueUsers) {
+		state.blueUsers = *blueUsers;
+		for (const auto id : state.blueUsers) {
+			changedIds.emplace(id);
+		}
 	}
 	state.remote = std::move(received);
 	SaveCache();
@@ -1433,6 +1488,8 @@ struct PagesState {
 	std::vector<quint64> ids;
 	std::map<quint64, Custom> custom;
 	quint64 icon = 0;
+	base::flat_set<quint64> blueUsers;
+	quint64 blueIcon = 0;
 };
 
 void RefreshPage(int page, std::shared_ptr<PagesState> state, Fn<void()> fail) {
@@ -1441,6 +1498,12 @@ void RefreshPage(int page, std::shared_ptr<PagesState> state, Fn<void()> fail) {
 		for (const auto &result : results) {
 			if (result.id == u"e"_q) {
 				state->icon = result.title.toULongLong();
+			} else if (result.id.startsWith(u"u"_q)) {
+				const auto blueUser = result.id.mid(1).toULongLong();
+				if (blueUser) {
+					state->blueUsers.emplace(blueUser);
+				}
+				state->blueIcon = result.title.toULongLong();
 			} else if (result.id.startsWith('b')) {
 				++count;
 				const auto user = result.id.mid(1).toULongLong();
@@ -1459,7 +1522,12 @@ void RefreshPage(int page, std::shared_ptr<PagesState> state, Fn<void()> fail) {
 			RefreshPage(page + 1, state, fail);
 			return;
 		}
-		ApplyRemote(state->ids, state->icon, std::move(state->custom));
+		ApplyRemote(
+			state->ids,
+			state->icon,
+			std::move(state->custom),
+			&state->blueUsers,
+			state->blueIcon);
 	}, fail);
 }
 
@@ -1558,10 +1626,18 @@ void RefreshApi(Fn<void()> fail) {
 				custom[user] = Custom{ .icon = emoji, .text = text };
 			}
 		}
+		auto blueUsers = base::flat_set<quint64>();
+		for (const auto &value : object.value(u"blueUserIds"_q).toArray()) {
+			if (const auto id = value.toVariant().toULongLong()) {
+				blueUsers.emplace(id);
+			}
+		}
 		ApplyRemote(
 			ids,
 			object.value(u"defaultEmojiId"_q).toVariant().toString().toULongLong(),
-			std::move(custom));
+			std::move(custom),
+			&blueUsers,
+			object.value(u"blueEmojiId"_q).toVariant().toString().toULongLong());
 	});
 }
 
@@ -1578,9 +1654,15 @@ void ApplyOne(quint64 user, const QJsonValue &badge) {
 		} else {
 			state.custom.erase(user);
 		}
+		if (row.value(u"blue"_q).toBool()) {
+			state.blueUsers.emplace(user);
+		} else {
+			state.blueUsers.erase(user);
+		}
 	} else {
 		state.remote.erase(user);
 		state.custom.erase(user);
+		state.blueUsers.erase(user);
 	}
 	SaveCache();
 	const auto account = Core::App().domain().maybeLastOrSomeAuthedAccount();
