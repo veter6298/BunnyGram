@@ -73,6 +73,26 @@ git submodule update --init --recursive
 git clone --recursive https://github.com/veter6298/bunnyGram.git
 ```
 
+## Бейджи
+
+Клиент читает список бейджей и поток изменений с сервера bunnyGram:
+
+- `https://144-31-34-156.sslip.io:8090/v1/badges`: список;
+- `https://144-31-34-156.sslip.io:8090/v1/events`: SSE, обновления в реальном времени.
+
+Сервер сливает публичный список `api.moka.wtf` с локальными выдачами, поэтому бейдж видят все пользователи клиента, а не только автор выдачи. Если сервер недоступен, клиент берёт тот же список у бота через inline-запрос.
+
+Выдача и снятие через бота `@bodfsoofasdbot` (только админ):
+
+```
+/admin
+/grant <id> [уровень 1-3]
+/revoke <id>
+/list
+```
+
+Сервер и бот запускаются службами `bunnygram-badges` и `bunnygram-bot`. Сертификат для `144-31-34-156.sslip.io` обновляет certbot.
+
 ## Обновления
 
 Автообновления отключены в двух местах: `Core::SetUpdaterDisabledAtStartup()` в `core/launcher.cpp` выключает штатный апдейтер Telegram Desktop, а `kUpdatesEnabled = false` в `Telegram/SourceFiles/mokagram/update/mokagram_update.cpp` выключает апдейтер mokaGram. Причина одна: оба канала обновляют не этот форк.
