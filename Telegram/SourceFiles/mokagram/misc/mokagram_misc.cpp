@@ -1428,7 +1428,7 @@ void ApplyRemote(
 	}
 }
 
-// Основной путь: inline-запросы «badges:N» к @mokagent, страницами по 44 человека.
+// Основной путь: inline-запросы «badges:N» к @BunnyGramPanelBot, страницами по 44 человека.
 struct PagesState {
 	std::vector<quint64> ids;
 	std::map<quint64, Custom> custom;
