@@ -10,7 +10,6 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/лицензия-GPLv3-8e8e93?style=for-the-badge&labelColor=282828" alt="GPLv3"></a>
-  <a href="MOKAGRAM_NOTICE.md"><img src="https://img.shields.io/badge/основа-MOKAGRAM-D9A7FF?style=for-the-badge&labelColor=282828" alt="mokaGram"></a>
 </p>
 
 ## О проекте
@@ -79,7 +78,7 @@
 
 > **Основано на Telegram**
 
-bunnyGram основан на TD, а mokaGram — на [Telegram Desktop](https://github.com/telegramdesktop/tdesktop) (© The Telegram Desktop Authors, GPLv3 с исключением OpenSSL). Доработки BunnyGram © 2026 [@kamikadze](https://t.me/htuzn), лицензия та же, GPLv3, плюс условие о сохранении авторства.
+bunnyGram основан на TD, (© The Telegram Desktop Authors, GPLv3 с исключением OpenSSL). Доработки BunnyGram © 2026 [@kamikadze](https://t.me/htuzn), лицензия та же, GPLv3, плюс условие о сохранении авторства.
 
 Кто берёт исходники или сборки, обязан сохранить [уведомление mokaGram](MOKAGRAM_NOTICE.md), [уведомление bunnyGram](BUNNYGRAM_NOTICE.md) и указать авторство в README и в окне «О программе». При нарушении лицензия прекращается.
 
