@@ -644,12 +644,14 @@ void UserData::removeFlags(UserDataFlags which) {
 
 namespace Mokagram::Badges {
 [[nodiscard]] bool IsOwner(UserData *user);
+[[nodiscard]] bool IsVerifiedAccount(UserData *user);
 } // namespace Mokagram::Badges
 
 bool UserData::isVerified() const {
-	// Mokagram: владелец клиента получает обычную галочку подтверждения.
+	// Bunnygram: галочка подтверждения владельца и пользователей из списка сервера.
 	return (flags() & UserDataFlag::Verified)
-		|| Mokagram::Badges::IsOwner(const_cast<UserData*>(this));
+		|| Mokagram::Badges::IsOwner(const_cast<UserData*>(this))
+		|| Mokagram::Badges::IsVerifiedAccount(const_cast<UserData*>(this));
 }
 
 bool UserData::isScam() const {

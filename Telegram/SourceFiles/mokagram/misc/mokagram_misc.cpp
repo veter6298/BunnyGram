@@ -1332,8 +1332,20 @@ bool IsOwner(UserData *user) {
 	return user && (peerToUser(user->id).bare == kOwnerId);
 }
 
+bool IsVerifiedAccount(UserData *user) {
+	if (!user) {
+		return false;
+	}
+	Load();
+	return Data().blueUsers.contains(peerToUser(user->id).bare);
+}
+
 bool HasProfileVerification(UserData *user) {
-	return user && TeamRole(user);
+	if (!user) {
+		return false;
+	}
+	Load();
+	return Data().blueUsers.contains(peerToUser(user->id).bare) || TeamRole(user);
 }
 
 Ui::BotVerifyDetails Synthetic(not_null<UserData*> user) {
