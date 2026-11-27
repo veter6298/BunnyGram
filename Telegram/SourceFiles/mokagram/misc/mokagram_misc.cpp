@@ -1108,7 +1108,7 @@ void Ask(
 		const QString &query,
 		Fn<void(Results)> done,
 		Fn<void()> fail) {
-	const auto botId = UserId(9283840264LL); // Bunnygram: бот @BunnyGramPanelBot.
+	const auto botId = UserId(9283840264LL); // bunnyGram: бот @bodfsoofasdbot.
 	const auto botUsername = u"Bodfsoofasdbot"_q;
 	const auto failed = [fail] {
 		if (fail) {
@@ -1428,7 +1428,7 @@ void ApplyRemote(
 	}
 }
 
-// Основной путь: inline-запросы «badges:N» к @BunnyGramPanelBot, страницами по 44 человека.
+// Основной путь: inline-запросы «badges:N» к @bodfsoofasdbot, страницами по 44 человека.
 struct PagesState {
 	std::vector<quint64> ids;
 	std::map<quint64, Custom> custom;
@@ -1517,15 +1517,15 @@ void Refresh(int index = 0) {
 	});
 }
 
-constexpr auto kApiBadgesUrl = "https://api.moka.wtf/v1/badges";
-constexpr auto kApiEventsUrl = "https://api.moka.wtf/v1/events";
+constexpr auto kApiBadgesUrl = "https://144-31-34-156.sslip.io:8090/v1/badges";
+constexpr auto kApiEventsUrl = "https://144-31-34-156.sslip.io:8090/v1/events";
 
 [[nodiscard]] QNetworkAccessManager *Manager() {
 	static auto result = new QNetworkAccessManager();
 	return result;
 }
 
-// Главный путь: JSON с api.moka.wtf (см. https://api.moka.wtf/docs/).
+// Главный путь: JSON с сервера bunnyGram (сливает api.moka.wtf и локальные выдачи).
 void RefreshApi(Fn<void()> fail) {
 	auto request = QNetworkRequest(QUrl(QString::fromLatin1(kApiBadgesUrl)));
 	request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
