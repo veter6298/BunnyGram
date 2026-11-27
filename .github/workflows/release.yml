@@ -77,7 +77,7 @@ jobs:
 
       - name: Libraries cache.
         id: cache-libs
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: |
             ${{ runner.temp }}/.buildx-cache
@@ -112,7 +112,7 @@ jobs:
 
       - name: Save libraries cache.
         if: always() && steps.libs.outcome == 'success'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: |
             ${{ runner.temp }}/.buildx-cache
@@ -121,7 +121,7 @@ jobs:
 
       - name: Restore Telegram Desktop cache.
         id: cache-tdesktop
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ runner.OS }}-tdesktop-release-${{ github.run_id }}
@@ -147,7 +147,7 @@ jobs:
 
       - name: Save Telegram Desktop cache.
         if: always() && steps.build.outcome != 'skipped'
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: ${{ env.CCACHE_DIR }}
           key: ${{ steps.cache-tdesktop.outputs.cache-primary-key }}
@@ -353,7 +353,7 @@ jobs:
 
       - name: ThirdParty cache.
         id: cache-third-party
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: ${{ env.TBUILD }}\ThirdParty
           key: ${{ runner.OS }}-${{ runner.arch }}-third-party-${{ env.CACHE_KEY }}-${{ github.run_id }}
@@ -361,7 +361,7 @@ jobs:
 
       - name: Libraries cache.
         id: cache-libs
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: |
             ${{ env.LibrariesPath }}\*
@@ -374,7 +374,7 @@ jobs:
 
       - name: Qt cache.
         id: cache-qt
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: |
             ${{ env.LibrariesPath }}\[qQ]t[_-]*
@@ -426,7 +426,7 @@ jobs:
       # Сохраняем кэши даже если библиотеки не доехали: следующий запуск продолжит с места падения.
       - name: Save Qt cache.
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: |
             ${{ env.LibrariesPath }}\[qQ]t[_-]*
@@ -435,7 +435,7 @@ jobs:
 
       - name: Save libraries cache.
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: |
             ${{ env.LibrariesPath }}\*
@@ -447,7 +447,7 @@ jobs:
 
       - name: Save ThirdParty cache.
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: ${{ env.TBUILD }}\ThirdParty
           key: ${{ steps.cache-third-party.outputs.cache-primary-key }}
@@ -563,7 +563,7 @@ jobs:
 
       - name: Libraries cache.
         id: cache-libs
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: |
             Libraries
@@ -591,7 +591,7 @@ jobs:
       # Кэш сохраняем даже если библиотеки не доехали: следующий запуск продолжит с места падения.
       - name: Save libraries cache.
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: |
             Libraries
