@@ -78,10 +78,10 @@
 
 > **Основано на Telegram**
 
-bunnyGram основан на TD, (© The Telegram Desktop Authors, GPLv3 с исключением OpenSSL). Доработки BunnyGram © 2026 [@kamikadze](https://t.me/htuzn), лицензия та же, GPLv3, плюс условие о сохранении авторства.
+bunnyGram основан на mokagram / TGD, (© The Telegram Desktop Authors, GPLv3 с исключением OpenSSL). Доработки BunnyGram © 2026 [@kamikadze](https://t.me/htuzn), лицензия та же, GPLv3, плюс условие о сохранении авторства.
 
 Кто берёт исходники или сборки, обязан сохранить [уведомление mokaGram](MOKAGRAM_NOTICE.md), [уведомление bunnyGram](BUNNYGRAM_NOTICE.md) и указать авторство в README и в окне «О программе». При нарушении лицензия прекращается.
 
-*Anyone using mokaGram source code **must credit the author** ([@kamikadze](https://t.me/htuzn), https://github.com/mokagram/mokagram) in the README and the About window and keep the [notice](MOKAGRAM_NOTICE.md). The bunnyGram fork keeps this attribution and adds [BUNNYGRAM_NOTICE.md](BUNNYGRAM_NOTICE.md).*
+*Anyone using mokaGram source code **must credit the author** ([@ecronx](https://t.me/@ecronx), https://github.com/mokagram/mokagram) in the README and the About window and keep the [notice](MOKAGRAM_NOTICE.md). The bunnyGram fork keeps this attribution and adds [BUNNYGRAM_NOTICE.md](BUNNYGRAM_NOTICE.md).*
 
 bunnyGram не связан с Telegram Messenger LLP. «Telegram» — товарный знак соответствующего правообладателя; название и иконка форка его не используют.
