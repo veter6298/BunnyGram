@@ -17,11 +17,11 @@ ART = ROOT / "Telegram/Resources/art"
 XCODE = ROOT / "Telegram/Telegram/Images.xcassets"
 DOCS = ROOT / "docs/readme"
 
-BG_TOP = (44, 44, 46)
-BG_BOTTOM = (24, 24, 26)
-BUNNY_TOP = (66, 178, 255)
-BUNNY_BOTTOM = (10, 104, 225)
-EAR_INNER = (11, 95, 191)
+BG_TOP = (48, 40, 66)
+BG_BOTTOM = (24, 18, 36)
+BUNNY_TOP = (196, 156, 255)
+BUNNY_BOTTOM = (108, 62, 224)
+EAR_INNER = (86, 48, 190)
 
 
 def mix(a, b, t):
@@ -61,7 +61,7 @@ def render(size, ss=2, shape="squircle"):
     )
     eyes = ((456.0, 604.0, 21.0), (568.0, 604.0, 21.0))
     eye_colour = (14, 42, 68)
-    radius = 224.0 if shape != "circle" else 512.0
+    radius = 288.0 if shape != "circle" else 512.0
     buffer = bytearray(big * big * 4)
     offset = 0
     for y in range(big):
