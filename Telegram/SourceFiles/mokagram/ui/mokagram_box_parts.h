@@ -19,10 +19,10 @@ struct RoundButton;
 
 namespace Mokagram::BoxParts {
 
-inline constexpr auto kBoxRadius = 28;
-inline constexpr auto kCardRadius = 22;
-inline constexpr auto kOuterSide = 14;
-inline constexpr auto kRoundSize = 36;
+inline constexpr auto kBoxRadius = 36;
+inline constexpr auto kCardRadius = 28;
+inline constexpr auto kOuterSide = 18;
+inline constexpr auto kRoundSize = 40;
 
 enum class RoundIcon {
 	Close,

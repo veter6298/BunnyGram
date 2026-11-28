@@ -251,7 +251,9 @@ void PaintCard(QPainter &p, QRect rect) {
 		rect.height() / 2);
 	p.setPen(Qt::NoPen);
 	p.setBrush(st::windowBg);
+	p.setOpacity(0.94);
 	p.drawRoundedRect(rect, radius, radius);
+	p.setOpacity(1.);
 }
 
 const style::Box &PillButtonsBox() {
